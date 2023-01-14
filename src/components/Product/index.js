@@ -11,12 +11,12 @@ const Product = (props) =>{
   return (
       <li className={classes.product}>
         <Image src={earingImage} alt={`Picture of ${name}`} />
-       
-        <span>{price}</span>
-        <div>
-          <span>reviews</span>
-          <span><Favorite /></span>
-          <button>Add To Cart</button>
+        <span>reviews</span>
+        <span className={classes.name}>{name}</span>
+        <div className={classes['to-cart']}>
+          <span className={classes.price}># {price.toFixed(2)}</span>
+          <span className={classes.favorite}><Favorite /></span>
+          <button type='button' className={classes['add-to-cart']}>Add To Cart</button>
         </div>
       </li>
     )

@@ -15,7 +15,7 @@
 
 .product{
   height: 100%;
-  grid-template-rows: 3fr 1fr 1fr;
+  grid-template-rows: 3.5fr 1fr 1fr 1.5fr;
   display: grid;
   background-color: var(--brown6);
   border-radius: 0.5rem;
@@ -26,4 +26,37 @@
   border-radius: inherit;
   width: 100%;
   height: 100%;
+}
+
+.to-cart{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.favorite,.no-favorite{
+  cursor: pointer;
+}
+
+.favorite{
+  color: orange;
+}
+
+
+.add-to-cart{
+  background-color: var(--brown3);
+  color:white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--brown6);
+  cursor: pointer;
+}
+.add-to-cart:hover{
+  background-color: var(--brown1);
+}
+
+.price{
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--brown1);
 }
