@@ -1,7 +1,6 @@
 .product-container{
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(15rem,0.8fr));
-  grid-auto-rows: 18rem;
   list-style-type: none;
   justify-content: center;
   width:80%;
@@ -14,11 +13,11 @@
 }
 
 .product{
-  height: 100%;
-  grid-template-rows: 3.5fr 1fr 1fr 1.5fr;
   display: grid;
+  grid-template-rows: 3.5fr 0.5fr 0.5fr 1fr;
   background-color: var(--brown6);
   border-radius: 0.5rem;
+  height: 100%;
 
 }
 

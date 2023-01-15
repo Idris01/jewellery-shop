@@ -1,13 +1,24 @@
 import {Favorite} from '@mui/icons-material'
-
+import {useDispatch,useSelector} from 'react-redux'
+//import {} from '@reduxjs/toolkit'
 import Image from 'next/image'
-import classes from './Product.module.css'
 
+import {cartActions} from '../slice/cart-slice'
+import classes from './Product.module.css'
 import earingImage from '../../assets/images/earing1.jpg'
 
 
 const Product = (props) =>{
+  //const {itemsCount} = useSelector(state=>state.cart)
+  const dispatch = useDispatch()
   const {pictures,id,units,price,name} = props
+  const addItemToCart = (id,amount) =>{
+    dispatch(cartActions.addItem({
+      itemId:id,
+      amount
+    }))
+    console.log(id,amount)
+  }
   return (
       <li className={classes.product}>
         <Image src={earingImage} alt={`Picture of ${name}`} />
@@ -16,7 +27,7 @@ const Product = (props) =>{
         <div className={classes['to-cart']}>
           <span className={classes.price}># {price.toFixed(2)}</span>
           <span className={classes.favorite}><Favorite /></span>
-          <button type='button' className={classes['add-to-cart']}>Add To Cart</button>
+          <button onClick={addItemToCart.bind(null,id,1)} type='button' className={classes['add-to-cart']}>Add To Cart</button>
         </div>
       </li>
     )
