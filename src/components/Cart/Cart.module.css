@@ -1,19 +1,21 @@
 .cart{
 	display: flex;
-	color:white;
 	justify-content: center;
 	align-items: center;
 	padding: 0.2rem;
-	color: purple;
+	color: var(--web-color7);
 	border-radius: 25%;
 	font-weight: 700;
 	cursor: pointer;
 	position: relative;
-	color: white;
 	display: inline-block;
 	width: 2rem;
 	height: 2rem;
 
+}
+.cart:hover{
+	color:var(--web-color9);
+	transform: scale(1.1);
 }
 
 .cart-count{
@@ -25,7 +27,7 @@
 	width: 1.2rem;
 	height: 1.2rem;
 	top:0;
-	background-color: red;
+	background-color: var(--style-color1);
 	border-radius: 50%;
 	color: white;
 	font-size: 12px;
@@ -33,6 +35,8 @@
 	left: 1.2rem;
 }
 
-.cart-count > *{
-
+.cart-content{
+	width: min(20rem, 80vw);
+	height: 60vh;
+	background-color: var(--web-color8);
 }

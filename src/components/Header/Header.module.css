@@ -1,12 +1,12 @@
 .header{
 	display: flex;
 	min-height: 5rem;
-	background-color: var(--brown1);
+	background-color: var(--web-color1);
 	color: white;
 	justify-content: space-between;
 	align-items: center;
 	padding:0 2rem;
-		position: sticky;
+	position: sticky;
 	top: 0;
 
 }
@@ -23,24 +23,34 @@
 	margin:0 3rem 0 auto;
 
 }
+.navigation >  *{
+	font-weight: 500;
+}
 .navigation > li > a {
 	text-decoration: none;
 }
 
 .navigation-login{
-	box-shadow: 0 0 2px var(--brown6);
+	background-color: var(--web-color8);
+	color:var(--web-color1);
 	padding: 0.5rem;
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 }
-.navigation-login > a{
-	color: white
-}
-.navigation-logout{
-	padding: 0.5rem;
-	background-color: yellow;
-	border-radius: 1rem;
+.navigation-login:hover{
+	background-color: var(--web-color9);
 }
 
+
+.navigation-logout{
+	padding: 0.5rem;
+	background-color: var(--style-color1);
+	border-radius: 0.5rem;
+	color: white;
+}
+.navigation-logout:hover{
+	background-color:var(--web-color9);
+	color: var(--style-color1);
+}
 @media screen and (max-width:720px){
 	.brand::before{
 	content: 'RJ';

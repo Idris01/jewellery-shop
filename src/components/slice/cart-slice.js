@@ -4,16 +4,16 @@ import {createSlice} from '@reduxjs/toolkit'
 const cartSlice = createSlice({
 	name: 'cart',
 	initialState:{
-		isVisibile:false,
+		isVisible:false,
 		items:{},
 		itemsCount:0,
 	},
 	reducers:{
 		hideCart(state){
-			state.isVisibile=false
+			state.isVisible=false
 		},
 		showCart(state){
-			state.isVisibile=false
+			state.isVisible=true
 		},
 		addItem(state,action){
 			const {itemId,amount} = action.payload

@@ -2,8 +2,8 @@ import { Inter } from '@next/font/google'
 
 import '@/styles/globals.css'
 
-import {FilledLayout} from '../components/Layout'
-import {StoreProvider} from '../components/store'
+import { FilledLayout } from '../components/Layout'
+import { StoreProvider } from '../components/store'
 
 
 const inter = Inter({ subsets: ['latin'] })
