@@ -16,7 +16,9 @@ function Header() {
 	}
 
 	const logoutHandler = () => {
+		dispatch(cartActions.reset())
 		dispatch(authActions.logout())
+
 	}
 
 	return (

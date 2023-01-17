@@ -1,13 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-// create slice that manage the cart visiblity
-const cartSlice = createSlice({
-	name: 'cart',
-	initialState:{
+const initialState = {
 		isVisible:false,
 		items:{},
 		itemsCount:0,
-	},
+	}
+
+// create slice that manage the cart visiblity
+const cartSlice = createSlice({
+	name: 'cart',
+	initialState,
 	reducers:{
 		hideCart(state){
 			state.isVisible=false
@@ -17,6 +19,7 @@ const cartSlice = createSlice({
 		},
 		addItem(state,action){
 			const {itemId,amount} = action.payload
+			console.log(amount)
 			const itemInCart = (itemId in state.items)
 			const {items,itemsCount} = state
 			state.items = itemInCart? {
@@ -33,32 +36,28 @@ const cartSlice = createSlice({
 			const itemInCart = (itemId in state.items)
 			const {items,itemsCount} = state
 
-
-			if (!itemInCart || items[itemId] === 1 ){
+			if (itemInCart && items[itemId] === 1 ){
 				// the item is not in cart, so nothing to remove
 				// or the item count is the minimum of 1
 				return
 			}
 
-			state = {
-				...state,
-				items:{
-					...items,
-					[itemId]:items[itemId]-1
-				},
-				itemsCount:itemsCount-1
-			}
+			state.itemsCount = itemsCount-1 
+			state.items[itemId] = items[itemId]-1
 		},
 		deleteItem(state,action){
 			const {itemId} = action.payload
 			const {items,itemsCount} = state
 			const itemAmount = items[itemId]
-			state = {
-				...state,
-				items:items.filter(item=>item.id != itemId),
-				itemsCount:itemsCount-itemAmount
-			}
+			const newItems = {...items}
+			delete newItems[itemId]
+			state.items = newItems
+			state.itemsCount = state.itemsCount - itemAmount
 
+		},
+		reset(state){
+			state.items = initialState.items
+			state.itemsCount = initialState.itemsCount
 		}
 		
 	}
