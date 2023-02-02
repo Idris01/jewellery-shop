@@ -18,6 +18,7 @@ const CartItem = (props) =>{
 
 
 	const increment = (id,amount) =>{
+		// increment item with "id" by "amount"
 		dispatch(cartActions.addItem({itemId:id,amount}))
 	}
 

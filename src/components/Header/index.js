@@ -1,18 +1,25 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { PersonOutline as NonAuthIcon, Person } from '@mui/icons-material/';
 import Link  from 'next/Link'
+import { useRouter } from 'next/router'
+import { useSession, signIn, signOut } from "next-auth/react"
 
 import { authActions } from '../slice/auth-slice'
+import { uiActions } from '../slice/ui-slice'
 import Cart from '../Cart'
 import classes from './Header.module.css';
+import { homepage } from  '../../web-urls'
 
 
 function Header() {
-	const { isAuthenticated } = useSelector(state=>state.auth)
+	const session = useSession()
 	const dispatch = useDispatch()
-
+	const router = useRouter()
+	const isAuthenticated = false
+	console.log(session)
 	const loginHandler = ()=>{
-		dispatch(authActions.login())
+		router.push('/auth/login')
 	}
 
 	const logoutHandler = () => {
@@ -21,12 +28,14 @@ function Header() {
 
 	}
 
+	const authIcon = isAuthenticated? <Person /> : <NonAuthIcon />
 	return (
 		<nav className={classes.header}>
-			<h1 className={classes.brand}></h1>
+			<h1 className={classes.brand} onClick={()=>router.push(homepage)}></h1>
 			<ul className={classes.navigation}>
-				{!isAuthenticated && <li className={classes['navigation-login']}><Link href='' onClick={loginHandler}>Login</Link></li>}
-				{isAuthenticated &&<li><Link href='' onClick={logoutHandler} className={classes['navigation-logout']}>Logout</Link></li>}
+				<li className={classes['navigation-login']}><Link href='' onClick={loginHandler}>
+					{ authIcon }
+				</Link></li>
 			</ul>
 			<Cart />
 		</nav>

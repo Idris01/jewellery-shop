@@ -4,13 +4,15 @@ import { Provider } from 'react-redux'
 import cartSlice  from '../slice/cart-slice';
 import productSlice from '../slice/product-slice';
 import authSlice from '../slice/auth-slice';
+import uiSlice from  '../slice/ui-slice';
 
 
 const store = configureStore({
 	reducer:{
 		cart:cartSlice.reducer,
 		product:productSlice.reducer,
-		auth:authSlice.reducer
+		auth:authSlice.reducer,
+		ui:uiSlice.reducer
 	}
 })
 

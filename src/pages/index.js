@@ -8,6 +8,8 @@ import products from '../DummyData'
 import { productActions } from '../components/slice/product-slice'
 import earingImage from '/src/assets/images/earing1.jpg'
 import Product, {ProductContainer} from '../components/Product'
+import { FilledLayout } from '../components/Layout'
+import { products as productsUrl } from '../api-urls'
 
 export default function Home(props) {
 
@@ -23,20 +25,25 @@ export default function Home(props) {
     content = <li>No content Found!</li>
   }
   else{
-    content=items.map(item=><Product key={item.id} {...item} />)
+    console.log(items)
+    content=Object.values(items).map(item=><Product key={item.unique_id} {...item} />)
   }
 
   return (
-    <ProductContainer>
-      {content}
-    </ProductContainer>
+    <FilledLayout>
+      <ProductContainer>
+        {content}
+      </ProductContainer>
+    </FilledLayout>
   )
 }
 
-export function getStaticProps(){
+export async function getStaticProps(){
+  const data = await fetch(productsUrl);
+  const response = await data.json()
   return {
     props: {
-      items:products
+      items:response
     }
   }
 }

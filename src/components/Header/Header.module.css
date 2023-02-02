@@ -8,7 +8,12 @@
 	padding:0 2rem;
 	position: sticky;
 	top: 0;
+	z-index: 100;
 
+}
+
+.brand{
+	cursor: pointer;
 }
 
 .brand::before{
@@ -29,15 +34,20 @@
 .navigation > li > a {
 	text-decoration: none;
 }
-
 .navigation-login{
-	background-color: var(--web-color8);
-	color:var(--web-color1);
-	padding: 0.5rem;
-	border-radius: 0.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-.navigation-login:hover{
-	background-color: var(--web-color9);
+.navigation-login > *{
+
+	color:var(--web-color8);
+	padding: 0.2rem;
+	border-radius: 50%;
+}
+.navigation-login > *:hover{
+	color: var(--web-color9);
+	box-shadow: 0 0 0.5rem var(--web-color9);
 }
 
 

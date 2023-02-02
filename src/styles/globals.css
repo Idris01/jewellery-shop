@@ -33,3 +33,13 @@
   z-index: 100;
 }
 
+.card-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  text-align: center;
+  padding: 1rem 0;
+  row-gap: 1rem;
+}
+

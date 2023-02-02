@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
+        <div id='modal'></div>
         <div id='cart-root'></div>
         <Main />
         <NextScript />

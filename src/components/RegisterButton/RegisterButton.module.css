@@ -1,0 +1,13 @@
+.register{
+	padding: 0.5rem ;
+	background: var(--web-color2);
+	color: var(--web-color8);
+	cursor: pointer;
+	border-radius: 0.5rem;
+	border: 1px solid black;
+}
+
+.register:hover{
+	color: var(--web-color9);
+	box-shadow: 0 0 0.5rem var(--web-color1);
+}
