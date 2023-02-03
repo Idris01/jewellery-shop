@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react'
-import {ShoppingBasket,CloseOutlined,Delete} from '@mui/icons-material';
+import Icon from '/src/components/Icon'
 import Image from 'next/image'
 import { createPortal } from 'react-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -39,8 +39,8 @@ const CartItem = (props) =>{
 					<button onClick={increment.bind(null,id,1)} name='increment' type='button'>+</button>
 				</div>
 				<span className={classes['cart-item-gross']}>{(amount*price).toFixed(2)}</span>
-				<span onClick={deleteItem.bind(null,id)} className={classes['cart-item-delete']}><Delete /></span>
-			</li>
+					<ing src={Delete} alt='delete Icon' />
+				</li>
 		)
 }
 
@@ -90,7 +90,7 @@ export const CartContent = () =>{
 								Cart Items
 							</h3>
 							<span className={classes.cancel} onClick={hideCartItems}>
-								<CloseOutlined />
+								<Cancel />
 							</span> 
 						</div>
 						<ul className={classes['cart-content-main']}>
@@ -128,7 +128,7 @@ function Cart(props) {
 
 	return (
 		<div onClick={showCartItems} className={classes.cart}>
-				<ShoppingBasket />
+				<Icon name='shopping_cart' />
 				<span className={classes['cart-count']}>
 					<span>
 						{ itemsCount}

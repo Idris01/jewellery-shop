@@ -1,4 +1,4 @@
-import {Favorite} from '@mui/icons-material'
+import { Favorite } from '/src/components/Icon'
 import {useDispatch,useSelector} from 'react-redux'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -52,7 +52,11 @@ const Product = (props) =>{
         <span className={classes.name}>{name}</span>
         <div className={classes['to-cart']}>
           <span className={classes.price}># {parseInt(price).toFixed(2)}</span>
-          <span onClick={favoriteHandler.bind(null,unique_id)} className={favClass}><Favorite /></span>
+          <span onClick={favoriteHandler.bind(null,unique_id)} className={favClass}>
+            <span className="material-symbols-outlined">
+            favorite
+            </span>
+          </span>
           <button onClick={addItemToCart.bind(null,unique_id,1)} type='button' className={classes['add-to-cart']}>Add To Cart</button>
         </div>
         {inStock? 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { PersonOutline as NonAuthIcon, Person } from '@mui/icons-material/';
+import Icon , { FilledIcon } from '/src/components/Icon'
 import Link  from 'next/Link'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -28,7 +28,7 @@ function Header() {
 
 	}
 
-	const authIcon = isAuthenticated? <Person /> : <NonAuthIcon />
+	const authIcon = isAuthenticated? <Icon name='person_filled' /> : <Icon name='person' />
 	return (
 		<nav className={classes.header}>
 			<h1 className={classes.brand} onClick={()=>router.push(homepage)}></h1>
