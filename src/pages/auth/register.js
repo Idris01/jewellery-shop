@@ -25,18 +25,21 @@ const Register = () =>{
 		}))
 	}
 
-	const registerUser = async () =>{
-		const data = await fetch(register,{
-			method: 'POST',
-			body:JSON.stringify(formData),
-			headers:{
-				'Content-Type':'application/json'
-			}
-		})
-
-		const response = await data.json()
-
-		console.log(response)
+	const registerUser = async (e) =>{
+		e.preventDefault();
+		try{
+			const data = await fetch(register,{
+				method: 'POST',
+				body:JSON.stringify(formData),
+				headers:{
+					"Content-Type":"application/json"
+				}
+			})
+			const response = await data.json()
+		}
+		catch (e){
+			console.log(e.message)
+		}
 	}
 
 	return (
@@ -46,22 +49,22 @@ const Register = () =>{
 					<div className={classes.register}>
 						<h1 className={classes.title}>Registration Page</h1>
 						<form onSubmit={registerUser} className={classes.form}>
-							<label forHtml='username'>Username</label>
+							<label forhtml='username'>Username</label>
 							<input onChange={updateData} type='text' id='username' name='username' value={username} required />
 
-							<label forHtml='email'>Email</label>
+							<label forhtml='email'>Email</label>
 							<input onChange={updateData} type='text' id='email' name='email' value={email} required />
 
-							<label forHtml='first-name'>First Name</label>
+							<label forhtml='first-name'>First Name</label>
 							<input onChange={updateData} type='text' id='first-name' name='firstName' value={firstName} required />
 
-							<label forHtml='last-name'>Last Name</label>
+							<label forhtml='last-name'>Last Name</label>
 							<input onChange={updateData} type='text' id='last-name' name='lastName' value={lastName} required/>
 
-							<label forHtml='password'>Password</label>
+							<label forhtml='password'>Password</label>
 							<input onChange={updateData} type='password' id='password' name='password' value={password} required/>
 
-							<label forHtml='confirm-password'>Confirm Password</label>
+							<label forhtml='confirm-password'>Confirm Password</label>
 							<input onChange={updateData} type='password' id='confirm-password' name='confirmPassword' value={confirmPassword} required />
 
 							<button type='submit' className={classes.submit}>Submit </button>

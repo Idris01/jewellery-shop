@@ -37,10 +37,10 @@ const Login = () =>{
 					<h1 className={classes['page-label']}>Login </h1>
 					<Card>
 					<form onSubmit={handleSubmit} className={classes.login}>
-						<label forHtml='email'> Email </label>
+						<label forhtml='email'> Email </label>
 						<input onChange={handleInput} type='email' id='email' name='email' value={signInData.email} required/>
 
-						<label forHtml='password'> Password </label>
+						<label forhtml='password'> Password </label>
 						<input onChange={handleInput} type='password' id='password' name='password' value={signInData.password} required />
 						<button type='submit'>Sign In </button>
 					</form>

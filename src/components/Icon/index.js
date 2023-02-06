@@ -2,7 +2,7 @@ import React from 'react'
 
 function Icon(props) {
 	return (
-		<span class="material-symbols-outlined">
+		<span className="material-symbols-outlined">
 			{props.name}
 		</span>
 	)
