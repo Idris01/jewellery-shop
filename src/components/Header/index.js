@@ -9,7 +9,8 @@ import { authActions } from '../slice/auth-slice'
 import { uiActions } from '../slice/ui-slice'
 import Cart from '../Cart'
 import classes from './Header.module.css';
-import { homepage } from  '../../web-urls'
+import { homepage, login } from  '../../web-urls'
+
 
 
 function Header() {
@@ -17,9 +18,9 @@ function Header() {
 	const dispatch = useDispatch()
 	const router = useRouter()
 	const isAuthenticated = false
-	console.log(session)
+
 	const loginHandler = ()=>{
-		router.push('/auth/login')
+		router.push(login)
 	}
 
 	const logoutHandler = () => {

@@ -8,15 +8,15 @@ import { register } from '../../api-urls'
 const initialState = {
 	username:'',
 	password:'',
-	confirmPassword:'',
-	firstName:'',
-	lastName:'',
+	confirm_password:'',
+	first_name:'',
+	last_name:'',
 	email:''
 }
 
 const Register = () =>{
 	const [formData,setFormData] = useState(initialState)
-	const {username,password,confirmPassword,email,firstName,lastName} = formData;
+	const {username,password,confirm_password,email,first_name,last_name} = formData;
 	const updateData = (event) =>{
 		const {name,value} = event.target;
 		setFormData((prevData)=>({
@@ -36,6 +36,7 @@ const Register = () =>{
 				}
 			})
 			const response = await data.json()
+			console.log(response)
 		}
 		catch (e){
 			console.log(e.message)
@@ -56,16 +57,16 @@ const Register = () =>{
 							<input onChange={updateData} type='text' id='email' name='email' value={email} required />
 
 							<label forhtml='first-name'>First Name</label>
-							<input onChange={updateData} type='text' id='first-name' name='firstName' value={firstName} required />
+							<input onChange={updateData} type='text' id='first-name' name='first_name' value={first_name} required />
 
 							<label forhtml='last-name'>Last Name</label>
-							<input onChange={updateData} type='text' id='last-name' name='lastName' value={lastName} required/>
+							<input onChange={updateData} type='text' id='last-name' name='last_name' value={last_name} required/>
 
 							<label forhtml='password'>Password</label>
 							<input onChange={updateData} type='password' id='password' name='password' value={password} required/>
 
 							<label forhtml='confirm-password'>Confirm Password</label>
-							<input onChange={updateData} type='password' id='confirm-password' name='confirmPassword' value={confirmPassword} required />
+							<input onChange={updateData} type='password' id='confirm-password' name='confirm_password' value={confirm_password} required />
 
 							<button type='submit' className={classes.submit}>Submit </button>
 						</form>
