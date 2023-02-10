@@ -35,7 +35,7 @@ const initialFormState = {
 		first_name:'',
 		last_name:'',
 		email:''
-	}
+	},
 }
 
 
@@ -52,7 +52,7 @@ const reducer = (state,action) =>{
 			...state,
 			error:{
 				...state.error,
-				[name]:true
+				[name]:false
 			},
 			value: {
 				...state.value,
@@ -75,9 +75,25 @@ const reducer = (state,action) =>{
 			newError[item] = true;
 			newMessage[item] = data[item][0]
 		})
-		console.log(newMessage)
 		return {...state,error:newError,message:newMessage}
 	}
+	else if (action.type === 'VALIDATE-PASSWORD'){
+		const { data } = action;
+		const { message, error} = state;
+		return {
+			...state,
+			message:{...message,confirm_password:data.message},
+			error:{...error,confirm_password:true}
+		}
+	}
+	else if(action.type === 'INFO-MESSAGE'){
+		const { data } = action;
+		return {
+			...state,
+			infoMessage:{}
+		}
+	}
+
 	return initialFormState
 }
 
@@ -86,8 +102,7 @@ const Register = () =>{
 	const [formState, dispatchFormState] = useReducer(reducer, initialFormState);
 	const {isLoading} = useSelector(state => state.ui);
 	const dispatch = useDispatch();
-
-	const [showMessage, setShowMessage] = useState(false) // displays status message
+	const [infoMessage, setInfoMessage] = useState({message:'',show:false,status:''}) // displays status message
 	const { error:formError, message:formMessage, value: formData  } = formState;
 	const {username,password,confirm_password,email,first_name,last_name} = formData;
 
@@ -99,7 +114,10 @@ const Register = () =>{
 
 	const registerUser = async (e) =>{
 		e.preventDefault();
-
+		if (password !== confirm_password ){
+			dispatchFormState({type:'VALIDATE-PASSWORD',data:{message:'password mismatch'}})
+			return
+		}
 		dispatch(uiActions.startLoading())
 
 		try{
@@ -112,58 +130,63 @@ const Register = () =>{
 			})
 			if (data.status > 204){
 				const response = await data.json()
-				const info = Object.keys(response) // elements with error
 				dispatchFormState({type:'RESPONSE-ERROR', data:response})
+			}
+			else{
+				const response = await data.json();
+				setInfoMessage({show:true,message:response.message,status:'success'})
+				dispatchFormState({type:'CLEAR'})
 			}
 			dispatch(uiActions.stopLoading())
 		}
 		catch (e){
 		}
 	}
-
-
+	const {show:displayMessage, message:infoContent, status} = infoMessage;
+	
 	return (			
 				<Layout>
 					{ isLoading && <Loader />}
 					<div className={classes.register}>
 						<h1 className={classes.title}>Registration Page</h1>
-						{ showMessage && <Info message='error' status='error' /> }
+						{ displayMessage && <Info message={infoContent} status={status} /> }
 						<form onSubmit={registerUser} className={classes.form}>
 							<div className={classes.input_group}>
-								<label forhtml='username'>Username</label>
+								<label forhtml='username'>Username:</label>
 								<input className={formError.username?classes.form_input_error:classes.form_input} onChange={updateData} type='text' id='username' name='username' value={username} required />
-								<span className={classes.error}>Message</span>
+								{formError.username && <span className={classes.error}>{formMessage.username}</span>}
+							
 							</div>
 							
 							<div className={classes.input_group}>
-								<label forhtml='email'>Email</label>
+								<label forhtml='email'>Email:</label>
 								<input className={formError.email?classes.form_input_error:classes.form_input} onChange={updateData} type='text' id='email' name='email' value={email} required />
-								<span className={classes.error}>Message</span>
-
+								{formError.email && <span className={classes.error}>{formMessage.email}</span>}
+							
 							</div>	
 
 							<div className={classes.input_group}>
-								<label forhtml='first-name'>First Name</label>
+								<label forhtml='first-name'>First Name:</label>
 								<input className={formError.first_name?classes.form_input_error:classes.form_input} onChange={updateData} type='text' id='first-name' name='first_name' value={first_name} required />
 								{formError.first_name && <span className={classes.error}>{formMessage.first_name}</span>}
 							
 							</div>
 							
 							<div className={classes.input_group}>
-								<label forhtml='last-name'>Last Name</label>
+								<label forhtml='last-name'>Last Name:</label>
 								<input className={formError.last_name?classes.form_input_error:classes.form_input} onChange={updateData} type='text' id='last-name' name='last_name' value={last_name} required/>
 								{formError.last_name && <span className={classes.error}>{formMessage.last_name}</span>}
 							
 							</div>
 							
 							<div className={classes.input_group}>
-								<label forhtml='password'>Password</label>
+								<label forhtml='password'>Password:</label>
 								<input className={formError.password?classes.form_input_error:classes.form_input} onChange={updateData} type='password' id='password' name='password' value={password} required/>
 								{formError.password && <span className={classes.error}>{formMessage.password}</span>}
 							</div>
 							
 							<div className={classes.input_group}>
-								<label forhtml='confirm-password'>Confirm Password</label>
+								<label forhtml='confirm-password'>Confirm Password:</label>
 								<input className={formError.confirm_password?classes.form_input_error:classes.form_input} onChange={updateData} type='password' id='confirm-password' name='confirm_password' value={confirm_password} required />
 								{formError.confirm_password && <span className={classes.error}>{formMessage.confirm_password}</span>}
 							</div>
