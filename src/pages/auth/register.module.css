@@ -7,20 +7,46 @@
 }
 
 .form {
-	display: grid;
-	grid-template-columns: 1.5fr 3fr;
-	row-gap: 1rem;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.5rem;
 	font-size: 13px;
 	align-content: center;
 }
-.form > input{
-	border: 1px solid grey;
+.input_group{
+	display:grid;
+	grid-template-rows: 3fr 1fr;
+	grid-template-columns: 1.5fr 3fr;
+	grid-template-areas: 
+	"inputname inputblock inputblock"
+	" . error error";
+
+}
+.input_group > label {
+	grid-area: inputname;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form_input, .form_input_error{
 	border-radius: 2px;
 	text-indent: 0.5rem;
+	grid-area: inputblock;
 }
-.form > input:focus{
-	outline:2px solid var(--web-color2);
+.error {
+	grid-area: error;
+	font-size: 10px;
+	color:red;
 }
+.form_input{
+		border: 1px solid grey;
+}
+
+.form_input_error{
+		border: 2px solid red;
+}
+
 
 .form *{
 	height: 2rem;
@@ -43,3 +69,4 @@
 	margin-bottom: 3rem;
 	text-align: center;
 }
+
