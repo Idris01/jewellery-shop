@@ -86,13 +86,6 @@ const reducer = (state,action) =>{
 			error:{...error,confirm_password:true}
 		}
 	}
-	else if(action.type === 'INFO-MESSAGE'){
-		const { data } = action;
-		return {
-			...state,
-			infoMessage:{}
-		}
-	}
 
 	return initialFormState
 }
@@ -142,6 +135,7 @@ const Register = () =>{
 		catch (e){
 		}
 	}
+	
 	const {show:displayMessage, message:infoContent, status} = infoMessage;
 	
 	return (			
