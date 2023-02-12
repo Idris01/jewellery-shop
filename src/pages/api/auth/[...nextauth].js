@@ -16,10 +16,14 @@ export const authOptions = {
       
       const {email,password} = credentials
       console.log(password,email)
+      let formData = new FormData()
+      formData.append('email',email)
+      formData.append('password',password)
+      
       const res = await fetch(apiLogin, {
         method: 'POST',
-        body: JSON.stringify({email,password}),
-        headers: { "Content-Type": "application/json" }
+        body: formData,
+        redirect: 'follow'
       })
       const user = await res.json()
       console.log(user)

@@ -1,17 +1,19 @@
 import {useState, useEffect} from 'react';
-import { useSession, signIn } from 'next-auth/react'
+import { useSession, signIn} from 'next-auth/react'
 import Layout from '../../components/Layout'
 import RegisterButton from '../../components/RegisterButton'
 import Card from '../../components/ui/Card'
 import Info from '../../components/ui/Info'
 import Loader from '../../components/ui/Loader'
 import classes from './login.module.css'
+import { useRouter } from 'next/router'
 
 
 
 
 const Login = () =>{
 	const {status} = useSession()
+	const router = useRouter()
 	const [signInData,setSignInData] = useState({email:'',password:''})
 	const [isLoadingState, setIsLoadingState ] = useState({isLoading:false,responseMessage:''})
 	const { responseMessage, isLoading} = isLoadingState;
