@@ -13,12 +13,10 @@ import { homepage, login } from  '../../web-urls'
 
 
 function Header() {
-	const session = useSession()
+	const { status } = useSession()
 	const dispatch = useDispatch()
 	const router = useRouter()
-	const isAuthenticated = false
-	
-	console.log(session)
+	const isAuthenticated = status === 'authenticated';
 
 	const logoutHandler = () => {
 		dispatch(cartActions.reset())
@@ -26,12 +24,23 @@ function Header() {
 
 	}
 
+	const userHandler = () =>{
+		if (!isAuthenticated){
+			router.push(login);
+		}
+		else{
+			// this will eventually be changed to show 
+			// information and profiles
+			router.push(homepage)
+		}
+	}
+
 	const authIcon = isAuthenticated? <Icon  name='person_filled' /> : <Icon name='person' />
 	return (
 		<nav className={classes.header}>
 			<h1 className={classes.brand} onClick={()=>router.push(homepage)}></h1>
 			<ul className={classes.navigation}>
-				<li onClick={() => router.push(login)} className={classes['navigation-login']}>
+				<li onClick={userHandler} className={classes['navigation-login']}>
 					{ authIcon }
 				</li>
 			</ul>

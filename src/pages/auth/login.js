@@ -17,11 +17,7 @@ const Login = () =>{
 	const [signInData,setSignInData] = useState({email:'',password:''})
 	const [isLoadingState, setIsLoadingState ] = useState({isLoading:false,responseMessage:''})
 	const { responseMessage, isLoading} = isLoadingState;
-	
-	if (status === 'authenticated'){
-		// redirect to homepage
-		router.push('/');
-	}
+	const [showPassword, setShowPassword ] = useState(false)
 	
 
 	const handleInput = (e) =>{
@@ -29,6 +25,10 @@ const Login = () =>{
 		setSignInData(prevData =>(
 			{...prevData,[name]:value}
 			))
+	}
+
+	const passwordToggler = () =>{
+		setShowPassword(prevState => !prevState)
 	}
 
 	const handleSubmit = async (e) =>{
@@ -56,7 +56,12 @@ const Login = () =>{
 
 
 	const showMessage = (responseMessage.trim().length > 0)
-
+	const passwordType = showPassword? 'text': 'password';
+	const eyeIcon = showPassword? <span className='material-symbols-outlined'>
+						 			visibility
+						 		  </span> : <span className='material-symbols-outlined'>
+						 				visibility_off
+						 			</span>
 	return (
 		<Layout>
 				<div>
@@ -65,11 +70,17 @@ const Login = () =>{
 					{ showMessage  && <Info message="invalid credentials" status='error' /> }
 					<Card>
 					<form onSubmit={handleSubmit} className={classes.login}>
-						<label forhtml='email'> Email </label>
-						<input onChange={handleInput} type='email' id='email' name='email' value={signInData.email} required/>
-
-						<label forhtml='password'> Password </label>
-						<input onChange={handleInput} type='password' id='password' name='password' value={signInData.password} required />
+						<div className={classes['input-control']}>
+							<label forhtml='email'> Email </label>
+							<input onChange={handleInput} type='email' id='email' name='email' value={signInData.email} required/>
+						</div>
+						
+						<div className={classes['input-control']}>
+							<label forhtml='password'> Password </label>
+							<input onChange={handleInput} type={passwordType} id='password' name='password' value={signInData.password} required />
+							<span onClick={passwordToggler} className={classes['password-toggler']}>{eyeIcon}</span>	
+						</div>
+						
 						<button type='submit'>Sign In </button>
 					</form>
 					</Card>
