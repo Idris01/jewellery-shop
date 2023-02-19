@@ -1,5 +1,6 @@
 import { Fragment , useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
@@ -16,8 +17,9 @@ export default function Home(props) {
   const dispatch = useDispatch()
   const [webProduct,setWebProduct] = useState({items:props.items,status:props.status,message:props.message})
   const {items,status,message} = webProduct
-
- 
+  const { data:sessionData, status:sessionStatus} = useSession()
+  
+  console.log(sessionData)
   
   let content;
   if (!items ){

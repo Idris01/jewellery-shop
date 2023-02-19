@@ -39,13 +39,26 @@ export const authOptions = {
  pages: {
     signIn: login
   },
-  callBacks:{
-    async jwt({token, account, profile}){
+  callbacks:{
+    async jwt({token, user, account, profile}){
+
       if(account){
-        token.accessToken = account.access
-        token.refreshToken = account.refresh
-        token.accessValidity = account.access_validity
+        token.accessToken = user.access
+        token.refreshToken = user.refresh
+        token.accessValidity = user.access_validity
+        token.userId = user.user_id
+        token.username = user.username
       }
+      return token
+    },
+    async session({ session, token, user }){
+      session.accessToken = token.accessToken
+      session.refreshToken = token.refreshToken
+      session.accessValidity = token.accessValidity
+      session.userId = token.userId
+      session.username = token.username
+
+      return session
     }
   }
 }

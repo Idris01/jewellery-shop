@@ -7,14 +7,15 @@ import Info from '../../components/ui/Info'
 import Loader from '../../components/ui/Loader'
 import classes from './login.module.css'
 import { useRouter } from 'next/router'
+import { homepage } from '/src/web-urls'
 
 
-
+const initialData = {email:'',password:''}
 
 const Login = () =>{
 	const {status} = useSession()
 	const router = useRouter()
-	const [signInData,setSignInData] = useState({email:'',password:''})
+	const [signInData,setSignInData] = useState(initialData)
 	const [isLoadingState, setIsLoadingState ] = useState({isLoading:false,responseMessage:''})
 	const { responseMessage, isLoading} = isLoadingState;
 	const [showPassword, setShowPassword ] = useState(false)
@@ -46,11 +47,13 @@ const Login = () =>{
 			)
 		}
 		else{
+			setSignInData({email:'',password:''})	// clear the loginform
 			setIsLoadingState(prevData=>({
 				...prevData,
 				isLoading:false,
 				responseMessage:""
 			}))
+			router.push(homepage)
 		}
 	}
 
