@@ -1,6 +1,6 @@
 import { Fragment , useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
@@ -13,13 +13,23 @@ import { FilledLayout } from '../components/Layout'
 import { products as productsUrl } from '../api-urls'
 
 export default function Home(props) {
-
   const dispatch = useDispatch()
   const [webProduct,setWebProduct] = useState({items:props.items,status:props.status,message:props.message})
-  const {items,status,message} = webProduct
   const { data:sessionData, status:sessionStatus} = useSession()
-  
+
+  const error = sessionData?.error
   console.log(sessionData)
+  if (error){
+    console.log("Will Logout")
+    signOut()
+    .catch(error=>{
+      console.log(error)
+    })
+  }
+
+  const {items,status,message} = webProduct
+  
+
   
   let content;
   if (!items ){

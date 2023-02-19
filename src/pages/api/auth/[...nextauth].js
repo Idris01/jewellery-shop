@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import {login} from '../../../web-urls'
-import {login as apiLogin } from '/src/api-urls'
+import {login as apiLogin, token_validity, token_refresh as refresh_url } from '/src/api-urls'
 import NextAuth from "next-auth"
 
 
@@ -15,7 +15,6 @@ export const authOptions = {
     async authorize(credentials, req) {
       
       const {email,password} = credentials
-      console.log(password,email)
       let formData = new FormData()
       formData.append('email',email)
       formData.append('password',password)
@@ -26,7 +25,6 @@ export const authOptions = {
         redirect: 'follow'
       })
       const user = await res.json()
-      console.log(user)
       // If no error and we have user data, return it
       if (res.ok && user) {
         return user
@@ -43,21 +41,53 @@ export const authOptions = {
     async jwt({token, user, account, profile}){
 
       if(account){
-        token.accessToken = user.access
-        token.refreshToken = user.refresh
-        token.accessValidity = user.access_validity
-        token.userId = user.user_id
-        token.username = user.username
+        const {access:access_token,refresh:refresh_token,user_id,username,access_validity} = user
+        return {
+          access_token,
+          refresh_token,
+          username,
+          user_id,
+          expire_at: Date.now() + access_validity * 1000
+        }
       }
-      return token
+      else if(Date.now() < token.expire_at){
+        console.log("token expired")
+        return token
+      }
+      else{
+        try{
+          let formData = new FormData();
+          formData.append("refresh",token.refresh_token)
+          let requestOptions = {
+            method: 'POST',
+            body: formData,
+            redirect:'follow'
+          }
+          const response = await fetch(refresh_url,requestOptions)
+
+          const data = await response.json()
+
+          if (!response.ok) throw data
+
+          return {
+            ...token,
+            access_token: data.access,
+            refresh_token: data.refresh_token ?? token.refresh_token,
+            expire_at: Date.now() + token_validity * 1000
+          }
+        }
+        catch (error){
+          console.log("Error refreshing access token", error)
+          return {...token, error: "RefreshAccessTokenError"}
+        }
+      }
     },
     async session({ session, token, user }){
-      session.accessToken = token.accessToken
-      session.refreshToken = token.refreshToken
-      session.accessValidity = token.accessValidity
-      session.userId = token.userId
-      session.username = token.username
 
+      session.user_id = token.user_id
+      session.username = token.username
+      session.error = token.error
+      session.access_token = token.access_token
       return session
     }
   }

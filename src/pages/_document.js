@@ -7,7 +7,9 @@ export default function Document() {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       </Head>
       <body>
-        <div id='modal'></div>
+        <div id='modal'>
+          {}
+        </div>
         <div id='cart-root'></div>
         <Main />
         <NextScript />
