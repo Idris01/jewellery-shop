@@ -18,7 +18,7 @@ export default function Home(props) {
   const { data:sessionData, status:sessionStatus} = useSession()
 
   const error = sessionData?.error
-  console.log(sessionData)
+  console.log("session Data is ", sessionData)
   if (error){
     console.log("Will Logout")
     signOut()

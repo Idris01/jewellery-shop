@@ -1,5 +1,6 @@
 import { Favorite } from '/src/components/Icon'
 import {useDispatch,useSelector} from 'react-redux'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
@@ -13,11 +14,13 @@ import classes from './Product.module.css'
 const Product = (props) =>{
 
   const router = useRouter();
+  const { status } = useSession()
   const dispatch = useDispatch()
-  const {favorites,isAuthenticated} = useSelector(state=>state.auth)
+  const {favorites} = useSelector(state=>state.auth)
   const {pictures,unique_id,units,price,name,units_available,units_sold} = props
   const productPictureUrls = pictures.split(',')
 
+  const isAuthenticated = status === 'authenticated'
 
   const addItemToCart = (id,amount) =>{
     if (!isAuthenticated){

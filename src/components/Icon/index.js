@@ -25,5 +25,29 @@ export const Favorite = () =>{
 		)
 }
 
+export const Close = () =>{
+	return (
+		<span className="material-symbols-outlined">
+		close
+		</span>
+		)
+}
+
+export const Show = () => {
+	return (<span className='material-symbols-outlined'>
+				visibility
+			</span>
+			)
+}
+
+export const Hide = () => {
+	return (<span className='material-symbols-outlined'>
+				visibility_off
+			</span>
+			)
+}
+
+
+
 
 export default Icon

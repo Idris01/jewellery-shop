@@ -27,7 +27,7 @@ export const authOptions = {
       const user = await res.json()
       // If no error and we have user data, return it
       if (res.ok && user) {
-        return user
+        return {...user, email}
       }
       // Return null if user data could not be retrieved
       return null
@@ -41,17 +41,16 @@ export const authOptions = {
     async jwt({token, user, account, profile}){
 
       if(account){
-        const {access:access_token,refresh:refresh_token,user_id,username,access_validity} = user
+        const {access:access_token,refresh:refresh_token,user_id,username} = user
         return {
           access_token,
           refresh_token,
           username,
           user_id,
-          expire_at: Date.now() + access_validity * 1000
+          expire_at: Date.now() + token_validity * 1000
         }
       }
       else if(Date.now() < token.expire_at){
-        console.log("token expired")
         return token
       }
       else{
@@ -65,9 +64,11 @@ export const authOptions = {
           }
           const response = await fetch(refresh_url,requestOptions)
 
+          if (!response.ok) throw new Error(response.message)
+          
           const data = await response.json()
 
-          if (!response.ok) throw data
+          
 
           return {
             ...token,
@@ -84,9 +85,10 @@ export const authOptions = {
     },
     async session({ session, token, user }){
 
-      session.user_id = token.user_id
+      session.user = {...session.user, user_id:token.user_id,email:token.email}
       session.username = token.username
       session.error = token.error
+      session.expire_at = token.expire_at
       session.access_token = token.access_token
       return session
     }

@@ -1,5 +1,6 @@
 import React, {useMemo} from 'react'
-import Icon from '/src/components/Icon'
+import { useSession } from 'next-auth/react'
+import Icon, { Close } from '/src/components/Icon'
 import Image from 'next/image'
 import { createPortal } from 'react-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -65,8 +66,12 @@ export const CartContent = () =>{
 	let currentItems;
 	if (!cartIsEmpty){
 		let keys=Object.keys(items)
-		currentItems = products.filter(product=>keys.includes(product.id))
+		console.log(items)
+	
+		currentItems = Object.values(products).filter(product=>keys.includes(product.id))
 
+		console.log(currentItems)
+		
 		content=currentItems.map(data=>{
 
 			let newData = {...data,amount:items[data.id]}
@@ -90,7 +95,7 @@ export const CartContent = () =>{
 								Cart Items
 							</h3>
 							<span className={classes.cancel} onClick={hideCartItems}>
-								<Cancel />
+								<Close />
 							</span> 
 						</div>
 						<ul className={classes['cart-content-main']}>
@@ -115,9 +120,9 @@ export const CartContent = () =>{
 
 function Cart(props) {
 	const {itemsCount,isVisible}  = useSelector(state=>state.cart)
-	const { isAuthenticated } = useSelector(state=>state.auth)
+	const { status } = useSession()
 	const dispatch = useDispatch()
-
+	const isAuthenticated = status == 'authenticated'
 	const showCartItems = () =>{
 		if (!isAuthenticated){
 			return
