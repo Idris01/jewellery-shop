@@ -107,7 +107,7 @@ export async function getServerSideProps({req, res}){
 	const session = await getServerSession(req, res, authOptions)
 
 	
-	if (session?.expire_at > Date.now()) {
+	if (session) {
 		return {
 			redirect: {
 				destination: homepage,
