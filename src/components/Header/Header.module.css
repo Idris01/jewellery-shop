@@ -24,13 +24,22 @@
 	display: flex;
 	list-style: none;
 	font-weight: 700;
-	column-gap: 0.5rem;
+	column-gap: 1.5rem;
 	margin:0 3rem 0 auto;
+	flex-flow: row-reverse;
+
 
 }
 .navigation >  *{
 	font-weight: 500;
+	color: var(--web-color9);
+	cursor: pointer;
 }
+.navigation > *:hover{
+	color: white;
+	transform: scale(1.2);
+}
+
 .navigation > li > a {
 	text-decoration: none;
 }
@@ -46,10 +55,10 @@
 	padding: 0.2rem;
 	border-radius: 50%;
 }
-.navigation-login > *:hover{
+/*.navigation-login > *:hover{
 	color: var(--web-color9);
 	box-shadow: 0 0 0.5rem var(--web-color9);
-}
+}*/
 
 
 .navigation-logout{

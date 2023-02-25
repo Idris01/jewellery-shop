@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Icon , { FilledIcon } from '/src/components/Icon'
+import Icon , { FilledIcon, Store } from '/src/components/Icon'
 import Link  from 'next/Link'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -42,6 +42,9 @@ function Header() {
 			<ul className={classes.navigation}>
 				<li onClick={userHandler} className={classes['navigation-login']}>
 					{ authIcon }
+				</li>
+				<li onClick={()=>router.push(homepage)}>
+					<Store />
 				</li>
 			</ul>
 			<Cart />

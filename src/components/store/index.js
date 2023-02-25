@@ -18,7 +18,7 @@ const store = configureStore({
 	}
 })
 
-const milliSecondsToTrigger = 10000
+const milliSecondsToTrigger = 1000000
 
 const events = [
 	"load",
@@ -52,7 +52,7 @@ export const StoreProvider = (props) =>{
 	useEffect(()=>{
 		// no need to set auto logout
 		if (!isAuthenticated){
-			console.log('skipping auto timer')
+			// console.log('skipping auto timer')
 			return
 		}
 

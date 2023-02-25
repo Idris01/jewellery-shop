@@ -1,7 +1,7 @@
 import { useState, useReducer } from 'react';
 import Link from 'next/link'
 import classes from './register.module.css';
-import Layout from '../../components/Layout';
+import { FilledLayout } from '../../components/Layout';
 import Loader from '/src/components/ui/Loader'
 import Info from '/src/components/ui/Info'
 import { uiActions } from '/src/components/slice/ui-slice'
@@ -139,7 +139,7 @@ const Register = () =>{
 	const {show:displayMessage, message:infoContent, status} = infoMessage;
 	
 	return (			
-				<Layout>
+				<FilledLayout>
 					{ isLoading && <Loader />}
 					<div className={classes.register}>
 						<h1 className={classes.title}>Registration Page</h1>
@@ -195,7 +195,7 @@ const Register = () =>{
 
 					</div>
 					
-				</Layout>
+				</FilledLayout>
 		)
 }
 

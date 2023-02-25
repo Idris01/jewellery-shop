@@ -1,0 +1,16 @@
+.social{
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	gap:0.5rem;
+}
+.social > li > img{
+	width: 1.5rem;
+	height: 1.5rem;
+	cursor: pointer;
+}
+
+.social >li> img:hover{
+	transform: scale(1.2);
+}

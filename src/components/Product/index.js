@@ -8,6 +8,7 @@ import { getProductUrl } from '../../web-urls';
 
 import {cartActions} from '../slice/cart-slice'
 import {authActions} from '../slice/auth-slice'
+import { useHttp } from '../Hooks'
 import classes from './Product.module.css'
 
 
@@ -16,16 +17,24 @@ const Product = (props) =>{
   const router = useRouter();
   const { status } = useSession()
   const dispatch = useDispatch()
+  const { items:itemsInCart } = useSelector(state=>state.cart)
   const {favorites} = useSelector(state=>state.auth)
   const {pictures,unique_id,units,price,name,units_available,units_sold} = props
   const productPictureUrls = pictures.split(',')
 
   const isAuthenticated = status === 'authenticated'
 
-  const addItemToCart = (id,amount) =>{
+  const addItemToCart = async (id,amount) =>{
     if (!isAuthenticated){
       return
     }
+    const newData = { 
+      ...itemInCart,
+      [id]: itemsInCart[id]? itemsInCart[id]+amount : amount
+       }
+
+
+
     dispatch(cartActions.addItem({
       itemId:id,
       amount

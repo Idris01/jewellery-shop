@@ -1,17 +1,19 @@
 .register{
 	color: var(--web-color1);
-	width:min(400px, 80vw);
+	width:min(500px, 80vw);
 	box-shadow: 0 0 4px var(--web-color1);
 	border-radius: 0.5rem;
 	padding: 2rem 1rem;
 }
 
 .form {
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
 	row-gap: 1.5rem;
 	font-size: 13px;
 	align-content: center;
+	column-gap: 2rem;
 }
 .input_group{
 	display:grid;
@@ -68,5 +70,15 @@
 .title{
 	margin-bottom: 3rem;
 	text-align: center;
+}
+
+@media screen and (max-width:520px){
+	.register{
+		width: 80%;
+	}
+	.form{
+	display: flex;
+	flex-direction: column;
+	}
 }
 

@@ -33,6 +33,13 @@ export const Close = () =>{
 		)
 }
 
+export const Store = () =>{
+	return (
+		<span className="material-symbols-outlined">
+		store
+		</span>
+		)
+}
 export const Show = () => {
 	return (<span className='material-symbols-outlined'>
 				visibility

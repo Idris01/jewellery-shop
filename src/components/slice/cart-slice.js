@@ -58,6 +58,11 @@ const cartSlice = createSlice({
 		reset(state){
 			state.items = initialState.items
 			state.itemsCount = initialState.itemsCount
+		},
+		setItems(state, action){
+			const {itemsCount,items } = action.payload
+			state.itemsCount = itemsCount
+			state.items = items
 		}
 		
 	}

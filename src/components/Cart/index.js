@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, {useMemo, useEffect} from 'react'
 import { useSession } from 'next-auth/react'
 import Icon, { Close } from '/src/components/Icon'
 import Image from 'next/image'
@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import classes from './Cart.module.css';
 import { cartActions } from '../slice/cart-slice'
+import { getCartApiUrl } from '../../api-urls'
+import { useHttp } from '../Hooks'
 
 const CartItem = (props) =>{
 	const {picture,name,price,units,amount,id} = props
@@ -65,13 +67,8 @@ export const CartContent = () =>{
 	let content = <li className={classes.empty}> No Items In Cart </li>
 	let currentItems;
 	if (!cartIsEmpty){
-		let keys=Object.keys(items)
-		console.log(items)
-	
-		currentItems = Object.values(products).filter(product=>keys.includes(product.id))
-
-		console.log(currentItems)
-		
+		let keys=Object.keys(items)	
+		currentItems = Object.values(products).filter(product=>keys.includes(product.id))		
 		content=currentItems.map(data=>{
 
 			let newData = {...data,amount:items[data.id]}
@@ -120,8 +117,9 @@ export const CartContent = () =>{
 
 function Cart(props) {
 	const {itemsCount,isVisible}  = useSelector(state=>state.cart)
-	const { status } = useSession()
+	const session = useSession()
 	const dispatch = useDispatch()
+	const { status,data } = session
 	const isAuthenticated = status == 'authenticated'
 	const showCartItems = () =>{
 		if (!isAuthenticated){
@@ -129,6 +127,37 @@ function Cart(props) {
 		}
 		dispatch(cartActions.showCart())
 	}
+
+	useEffect(()=>{
+		if (!isAuthenticated){
+			return
+		}
+		const requestContent = {
+			url:getCartApiUrl(data?.user.user_id),
+			body: {
+				'headers': {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${session.data?.access_token}`
+				}
+			}
+		}
+		useHttp(requestContent)
+		.then(res =>{
+			// cart data will be availabile in the `res`
+			const { error, data } = res;
+			const responseData = {
+				items:{},
+				itemsCount:0
+			}
+			if (data.length !== 0){
+				// cart is not empty
+				// so update the data
+			}
+			dispatch(cartActions.setItems(responseData))
+		})
+		
+
+	},[status])
 
 
 	return (

@@ -3,7 +3,7 @@ import { unstable_getServerSession as getServerSession } from "next-auth/next"
 
 import {useState, useEffect} from 'react';
 import { useSession, signIn} from 'next-auth/react'
-import Layout from '../../components/Layout'
+import { FilledLayout } from '../../components/Layout'
 import RegisterButton from '../../components/RegisterButton'
 import Card from '../../components/ui/Card'
 import Info from '../../components/ui/Info'
@@ -68,7 +68,7 @@ const Login = () =>{
 
 
 	return (
-		<Layout>
+		<FilledLayout>
 				<div>
 					{ (isLoading) && <Loader />}
 					<h1 className={classes['page-label']}>Login </h1>
@@ -96,7 +96,7 @@ const Login = () =>{
 					</div>
 				</div>
 
-		</Layout>
+		</FilledLayout>
 			
 		)
 }

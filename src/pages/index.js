@@ -17,15 +17,7 @@ export default function Home(props) {
   const [webProduct,setWebProduct] = useState({items:props.items,status:props.status,message:props.message})
   const { data:sessionData, status:sessionStatus} = useSession()
 
-  const error = sessionData?.error
-  console.log("session Data is ", sessionData)
-  if (error){
-    console.log("Will Logout")
-    signOut()
-    .catch(error=>{
-      console.log(error)
-    })
-  }
+  
 
   const {items,status,message} = webProduct
   
