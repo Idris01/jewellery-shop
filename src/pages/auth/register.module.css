@@ -4,6 +4,7 @@
 	box-shadow: 0 0 4px var(--web-color1);
 	border-radius: 0.5rem;
 	padding: 2rem 1rem;
+	margin:2rem 0 2rem 0;
 }
 
 .form {

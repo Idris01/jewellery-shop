@@ -7,6 +7,7 @@
 	align-items: center;
 	padding:0 2rem;
 	position: sticky;
+	width: 100%;
 	top: 0;
 	z-index: 100;
 
@@ -24,9 +25,9 @@
 	display: flex;
 	list-style: none;
 	font-weight: 700;
-	column-gap: 1.5rem;
+	column-gap: 1.8rem;
 	margin:0 3rem 0 auto;
-	flex-flow: row-reverse;
+	flex-flow: row;
 
 
 }
@@ -71,6 +72,16 @@
 	background-color:var(--web-color9);
 	color: var(--style-color1);
 }
+
+.user-option{
+	padding: 1rem;
+	background-color: var(--web-color8);
+	position:fixed;
+	margin: 5rem 0 0 0;
+	width:100%;
+	z-index: 5;
+}
+
 @media screen and (max-width:720px){
 	.brand::before{
 	content: 'RJ';

@@ -1,0 +1,28 @@
+.container{
+	display: flex;
+	list-style: none;
+	margin: 0;
+	justify-content: center;
+
+}
+
+.container > li{
+	margin: 0 1rem 0 1rem;
+	cursor: pointer;
+}
+
+@media screen and (max-width:600px){
+	.container{
+		align-items: flex-end;
+		flex-direction: column-reverse;
+
+
+	}
+	.container > li{
+		width:100%;
+		margin:0;
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
+	}
+}

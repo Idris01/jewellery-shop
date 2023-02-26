@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	headerVisible:true,
+	userOptionVisible:false,
 	footerVisible:true,
 	isLoading:false
 }
@@ -11,11 +11,8 @@ const uiSlice = createSlice({
 	name:'ui',
 	initialState,
 	reducers:{
-		hideHeader(state){
-			state.headerVisible = false
-		},
-		showHeader(state){
-			state.headerVisible = true
+		toggleUserOption(state){
+			state.userOptionVisible = !state.userOptionVisible
 		},
 		hideFooter(state){
 			state.footerVisible=false
