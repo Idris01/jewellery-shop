@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { getProductUrl } from '../../web-urls';
+import { getCartApiUrl } from '../../api-urls'
 
 import {cartActions} from '../slice/cart-slice'
 import {authActions} from '../slice/auth-slice'
@@ -15,30 +16,46 @@ import classes from './Product.module.css'
 const Product = (props) =>{
 
   const router = useRouter();
-  const { status } = useSession()
+  const session = useSession()
   const dispatch = useDispatch()
   const { items:itemsInCart } = useSelector(state=>state.cart)
   const {favorites} = useSelector(state=>state.auth)
   const {pictures,unique_id,units,price,name,units_available,units_sold} = props
   const productPictureUrls = pictures.split(',')
 
-  const isAuthenticated = status === 'authenticated'
+  const isAuthenticated = session.status === 'authenticated'
+  const url = getCartApiUrl(session.data?.user?.user_id)
 
   const addItemToCart = async (id,amount) =>{
     if (!isAuthenticated){
       return
     }
+
+    // data to be syncronized with the backend 
     const newData = { 
-      ...itemInCart,
+      ...itemsInCart,
       [id]: itemsInCart[id]? itemsInCart[id]+amount : amount
        }
+    console.log(url)
+    const body = {
+      method:'POST',
+      body: newData,
+      headers:{
+        'Content-Type': "application/json",
+        Authorization: `Bearer ${session.data?.access_token}`
+      },
+    }
+       useHttp({url,body})
+       .then(res=>{
+        console.log(res)
+       })
 
 
 
-    dispatch(cartActions.addItem({
-      itemId:id,
-      amount
-    }))
+    // dispatch(cartActions.addItem({
+    //   itemId:id,
+    //   amount
+    // }))
   }
 
   const favoriteHandler = (itemId) => {
@@ -53,7 +70,6 @@ const Product = (props) =>{
   let inStock = units_available > units_sold
 
   const productUrl = getProductUrl(unique_id);
-
 
   return (
       <li className={classes.product}  >
