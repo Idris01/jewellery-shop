@@ -151,8 +151,8 @@ function Cart(props) {
 			}
 			if (data.length !== 0){
 				data.forEach(item=>{
-					const {product, units} = item;
-					responseData.items[product]=units;
+					const {product_id, units} = item;
+					responseData.items[product_id]=units;
 					responseData.itemsCount += units
 				})
 				// so update the data

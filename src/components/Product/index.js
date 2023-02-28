@@ -48,12 +48,16 @@ const Product = (props) =>{
     }
        useHttp({url,body})
        .then(res=>{
-        const {error, data:{message,data}} = res
-        let itemsCount = Object.values(data).reduce((acc,current)=>acc+current,0)
-         dispatch(cartActions.setItems({
-          items:data,
-          itemsCount
-        }))
+        console.log(res)
+        const {error, data} = res
+        if (data){
+          const {message, data:productData} = data
+          let itemsCount = Object.values(productData).reduce((acc,current)=>acc+current,0)
+           dispatch(cartActions.setItems({
+            items:productData,
+            itemsCount
+          }))
+        }
        })
    
   }
