@@ -36,26 +36,26 @@ const Product = (props) =>{
       ...itemsInCart,
       [id]: itemsInCart[id]? itemsInCart[id]+amount : amount
        }
-    console.log(url)
+
+    // body of fetch request
     const body = {
-      method:'POST',
-      body: newData,
+      method:"PUT",
+      body: JSON.stringify({"cart":JSON.stringify(newData)}),
       headers:{
         'Content-Type': "application/json",
-        Authorization: `Bearer ${session.data?.access_token}`
+        'Authorization': `Bearer ${session.data?.access_token}`
       },
     }
        useHttp({url,body})
        .then(res=>{
-        console.log(res)
+        const {error, data:{message,data}} = res
+        let itemsCount = Object.values(data).reduce((acc,current)=>acc+current,0)
+         dispatch(cartActions.setItems({
+          items:data,
+          itemsCount
+        }))
        })
-
-
-
-    // dispatch(cartActions.addItem({
-    //   itemId:id,
-    //   amount
-    // }))
+   
   }
 
   const favoriteHandler = (itemId) => {
@@ -81,9 +81,7 @@ const Product = (props) =>{
         <div className={classes['to-cart']}>
           <span className={classes.price}># {parseInt(price).toFixed(2)}</span>
           <span onClick={favoriteHandler.bind(null,unique_id)} className={favClass}>
-            <span className="material-symbols-outlined">
-            favorite
-            </span>
+            <Favorite />
           </span>
           <button onClick={addItemToCart.bind(null,unique_id,1)} type='button' className={classes['add-to-cart']}>Add To Cart</button>
         </div>

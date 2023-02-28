@@ -144,13 +144,17 @@ function Cart(props) {
 		useHttp(requestContent)
 		.then(res =>{
 			// cart data will be availabile in the `res`
-			const { error, data } = res;
+			const { error, data} = res;
 			const responseData = {
 				items:{},
 				itemsCount:0
 			}
 			if (data.length !== 0){
-				// cart is not empty
+				data.forEach(item=>{
+					const {product, units} = item;
+					responseData.items[product]=units;
+					responseData.itemsCount += units
+				})
 				// so update the data
 			}
 			dispatch(cartActions.setItems(responseData))
