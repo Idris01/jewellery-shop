@@ -1,20 +1,22 @@
-import React, {useMemo, useEffect} from 'react'
+import React, {useMemo, useEffect, useState} from 'react'
 import { useSession } from 'next-auth/react'
-import Icon, { Close } from '/src/components/Icon'
+import Icon, { Close, Delete } from '/src/components/Icon'
 import Image from 'next/image'
 import { createPortal } from 'react-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 
 import classes from './Cart.module.css';
+import { StateLoading } from '../ui/Loader'
 import { cartActions } from '../slice/cart-slice'
 import { getCartApiUrl } from '../../api-urls'
 import { useHttp } from '../Hooks'
 
 const CartItem = (props) =>{
-	const {picture,name,price,units,amount,id} = props
 	const dispatch = useDispatch()
-
+	const {picture,name,price,units,id} = props
+	
+	console.log(picture)
 	const decrement = (id) =>{
 		dispatch(cartActions.removeItem({itemId:id}))
 	}
@@ -34,15 +36,15 @@ const CartItem = (props) =>{
 
 	return (
 			<li className={classes['cart-item']}>
-				<img src='mysource' alt='img' />
+				<Image src={picture} width={30} height={30} alt='img' />
 				<span className={classes['cart-item-price']}> # {price}</span>
 				<div className={classes['cart-item-update']}>
 					<button onClick={decrement.bind(null,id)} name='decrement' type='button'>-</button>
-						<span name='amount'> x {amount}</span>
+						<span name='amount'> x {units}</span>
 					<button onClick={increment.bind(null,id,1)} name='increment' type='button'>+</button>
 				</div>
-				<span className={classes['cart-item-gross']}>{(amount*price).toFixed(2)}</span>
-					<ing src={Delete} alt='delete Icon' />
+				<span className={classes['cart-item-gross']}>{(+units*price).toFixed(2)}</span>
+					<Delete />
 				</li>
 		)
 }
@@ -50,6 +52,13 @@ const CartItem = (props) =>{
 
 /* CartContent Component 
 */
+
+const initialContentState = {
+	cartIsEmpty : true,
+	cartAmount : 0,
+	content: <StateLoading />
+}
+
 export const CartContent = () =>{
 	// Container that contains all items added to cart
 
@@ -57,31 +66,59 @@ export const CartContent = () =>{
 	const {items:products } = useSelector(state=>state.product)
 	const myProducts = useSelector(state => state.product)
 	const dispatch = useDispatch()
+	const {status, data} = useSession()
+	const [contentState, setContentState] = useState(initialContentState)
+	const {content,cartIsEmpty,cartAmount} = contentState
+
+
+	useEffect(()=>{
+		if (!(status === 'authenticated')) return;
+
+		const user_id = data?.user?.user_id
+		const access_token = data?.access_token
+
+		const body = {
+			headers: {
+				Authorization: `Bearer ${access_token}`
+			}
+		}
+
+		useHttp({url:getCartApiUrl(user_id), body})
+		.then(({error,data})=>{
+			if (error) return;
+			let cartAmount = 0
+			let cartIsEmpty = data.length === 0
+
+			let content = data.map(({product,units})=>{
+	
+				const productDetail = {
+					...product,
+					units,
+					id:product.unique_id,
+					picture:product.pictures.split(",")[0]
+				}
+				cartAmount += units * product.price
+		
+				return (
+					<CartItem 
+						key={product.unique_id} 
+						{...productDetail} 
+					/>
+					)
+			})
+
+			if (!content){
+				content = <li className={classes.empty}> No Items In Cart </li>
+			}
+
+			setContentState({cartAmount,content,cartIsEmpty})
+		})
+	},[itemsCount])
 
 	const hideCartItems = () =>{
 		dispatch(cartActions.hideCart())
 	}
-
-
-	const cartIsEmpty = itemsCount === 0
-	let content = <li className={classes.empty}> No Items In Cart </li>
-	let currentItems;
-	if (!cartIsEmpty){
-		let keys=Object.keys(items)	
-		currentItems = Object.values(products).filter(product=>keys.includes(product.id))		
-		content=currentItems.map(data=>{
-
-			let newData = {...data,amount:items[data.id]}
-			return <CartItem key={data.id} {...newData} />
-		})
-	}
-
-	let cartAmount;
-	if(!cartIsEmpty){
-		 cartAmount= currentItems.reduce((prev,item)=>{
-			let thisValue = items[item.id] * item.price
-			return prev + thisValue
-		},0)}
+	
 
 	return (
 			createPortal(

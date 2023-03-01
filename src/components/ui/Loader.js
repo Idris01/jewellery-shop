@@ -26,4 +26,13 @@ const Loader = () =>{
 	
 }
 
+export function StateLoading(){
+	return (
+			<div className={classes["state-loading"]}>
+				<span>
+				</span>
+			</div>
+		)
+}
+
 export default Loader

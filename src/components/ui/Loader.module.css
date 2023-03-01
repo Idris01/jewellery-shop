@@ -25,6 +25,21 @@
 	animation: spin 2s infinite linear;
 }
 
+.state-loading{
+	display: flex;
+	justify-content:center;
+	align-items: center;
+}
+
+.state-loading > span{
+	display: inline-block;
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 50%;
+	border-top: 0.2rem solid var(--web-color8);
+	animation: spin 2s infinite linear;
+}
+
 @keyframes spin {
 	100% {
 		transform: rotate(720deg);

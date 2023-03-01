@@ -61,6 +61,13 @@ export const VerticalOption = () => {
 			)
 }
 
+export const Delete = () => {
+	return (<span className='material-symbols-outlined'>
+				delete
+			</span>
+			)
+}
+
 
 
 
