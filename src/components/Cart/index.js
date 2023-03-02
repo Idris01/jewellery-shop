@@ -15,31 +15,62 @@ import { getProductUrl } from '../../web-urls'
 import { useHttp } from '../Hooks'
 
 const CartItem = (props) =>{
+	const { items,itemsCount } = useSelector(state=>state.cart)
+	const {status, data:{user:{user_id}, access_token }} = useSession()
 	const dispatch = useDispatch()
 	const router = useRouter()
 	const {picture,name,price,units,id} = props
 	
-	console.log(picture)
-	const decrement = (id) =>{
-		dispatch(cartActions.removeItem({itemId:id}))
-	}
 
 
-	const increment = (id,amount) =>{
-		// increment item with "id" by "amount"
-		dispatch(cartActions.addItem({itemId:id,amount}))
-	}
-
-
-	const deleteItem = (id) =>{
-		// Delete an item with "id" from cart
-		dispatch(cartActions.deleteItem({itemId:id}))
-	}
 
 	const goToItemPage = (id) =>{
 		// switch to the item page
 		dispatch(cartActions.hideCart())
 		router.push(getProductUrl(id))
+	}
+
+	const updateCartItem = (id,action,units=1) =>{
+		const payload = {...items}
+
+		if (action === 'decrement'){
+			payload[id] -= payload[id] < 2? 0:1 
+		}
+		else if (action === 'increment'){
+			payload[id] += units 
+		}
+		else if (action === 'delete'){
+			delete payload[id]
+		}
+
+		
+		const body = {
+			method:'PUT',
+			headers:{
+				'Content-Type':'application/json',
+				Authorization: `Bearer ${access_token}`
+			},
+			body:JSON.stringify({cart:JSON.stringify(payload)})
+		}
+
+		let url=getCartApiUrl(user_id)
+
+		useHttp({url, body})
+		.then(resp=>{
+			const {error, data} = resp
+	        if (data){
+	          const {message, data:productData} = data
+	          let itemsCount = Object.values(productData).reduce((acc,current)=>acc+current,0)
+	           dispatch(cartActions.setItems({
+	            items:productData,
+	            itemsCount
+	          }))
+	        }
+	        else if(error){
+	        	console.log(error)
+	        }
+		})
+
 	}
 
 
@@ -48,12 +79,14 @@ const CartItem = (props) =>{
 				<div onClick={goToItemPage.bind(null,id)} className={classes["image-container"]}><Image src={picture} width={100} height={100} alt='img' /></div>
 				<span className={classes['cart-item-price']}> # {price}</span>
 				<div className={classes['cart-item-update']}>
-					<span name='decrement' onClick={decrement.bind(null,id,1)}><ArrowDown /></span>
+					<span name='decrement' onClick={updateCartItem.bind(null,id,'decrement',1)}><ArrowDown /></span>
 						<span name='amount'> x {units}</span>
-					<span name='increment' onClick={increment.bind(null,id,1)}><ArrowUp /></span>
+					<span name='increment' onClick={updateCartItem.bind(null,id,'increment',1)}><ArrowUp /></span>
 				</div>
 				<span className={classes['cart-item-gross']}>{(+units*price).toFixed(2)}</span>
-				<span className={classes["cart-item-delete"]}><Delete /></span>
+				<span className={classes["cart-item-delete"]} onClick={updateCartItem.bind(null,id,'delete')}>
+					<Delete />
+				</span>
 				</li>
 		)
 }
@@ -113,7 +146,7 @@ export const CartContent = () =>{
 					)
 			})
 
-			if (!content){
+			if (!content || cartIsEmpty){
 				content = <li className={classes.empty}> No Items In Cart </li>
 			}
 
@@ -192,17 +225,22 @@ function Cart(props) {
 				items:{},
 				itemsCount:0
 			}
-			if (data.length !== 0){
+
+			if (data && data.length !== 0){
 				data.forEach(item=>{
 					const {product_id, units} = item;
 					responseData.items[product_id]=units;
 					responseData.itemsCount += units
 				})
-				// so update the data
+
+				dispatch(cartActions.setItems(responseData))
 			}
-			dispatch(cartActions.setItems(responseData))
+			else{
+				// todo unable to fetch data
+				// notify the user
+			}
+			
 		})
-		
 
 	},[status])
 

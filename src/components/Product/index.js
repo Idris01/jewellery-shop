@@ -48,7 +48,7 @@ const Product = (props) =>{
     }
        useHttp({url,body})
        .then(res=>{
-        console.log(res)
+        
         const {error, data} = res
         if (data){
           const {message, data:productData} = data
