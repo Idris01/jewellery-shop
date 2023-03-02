@@ -68,7 +68,19 @@ export const Delete = () => {
 			)
 }
 
+export const ArrowUp = () => {
+	return (<span className='material-symbols-outlined'>
+				arrow_drop_up
+			</span>
+			)
+}
 
+export const ArrowDown = () => {
+	return (<span className='material-symbols-outlined'>
+				arrow_drop_down
+			</span>
+			)
+}
 
 
 export default Icon

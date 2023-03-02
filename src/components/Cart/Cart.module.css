@@ -38,7 +38,7 @@
 .cart-content{
 	display: grid;
 	grid-template-rows: auto 1fr auto;
-	width: min(20rem, 80vw);
+	width: max(20em, 50vw);
 	height: 60vh;
 	background-color: white;
 	list-style: none;
@@ -61,7 +61,7 @@
 }
 .cart-content-main{
 	display: grid;
-	grid-auto-rows: 4rem;
+	grid-auto-rows: 8rem;
 	box-shadow: 0 0 2px var(--web-color3);
 	height: 100%;
 	padding: 0.5rem;
@@ -85,14 +85,14 @@
 
 .cart-item{
 	list-style: none;
-	box-shadow: 0 0 2px var(--web-color2);
 	border-radius: 0.2rem;
-	height: 100%;
+	border-bottom: 1px solid var(--web-color9);
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1.5fr 0.5fr;
-	column-gap: 0.5rem;
+	column-gap: 0.3rem;
 	justify-items: center;
 }
+
 
 .cancel{
 	display: flex;
@@ -152,19 +152,12 @@ box-shadow: 0 0 3px var(--web-color1);
 box-shadow: 0 0 3px var(--web-color3);	
 }
 
-.cart-item > img{
-	display: block;
-	width: 100%;
-	height: auto;
-	border: 1px solid white;
-	margin:0.2rem 0.2rem;
-}
 .cart-item-price{
 	transform: scale(0.8);
 	color: var(--web-color1);
 }
 .cart-item-delete{
-	transform: scale(0.7);
+	transform: scale(0.9);
 }
 .cart-item-delete:hover{
 	color:red;
@@ -202,4 +195,17 @@ Footer Styles here
 }
 .total-label{
 	font-size: 12px;
+}
+
+.image-container{
+display: flex;
+width:100%;
+height: 100%;
+justify-content: center;
+cursor: pointer;
+}
+
+.image-container > img {
+	object-fit: contain;
+	width: 100%;
 }
