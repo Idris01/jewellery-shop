@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon , { FilledIcon, Store, VerticalOption } from '/src/components/Icon'
-import Link  from 'next/Link'
+import Link  from 'next/link'
 import { useRouter } from 'next/router'
 import { useSession, signIn, signOut } from "next-auth/react"
 
