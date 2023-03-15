@@ -1,5 +1,6 @@
 .header{
-	display: flex;
+	display: grid;
+	grid-template-columns: 2fr auto 2fr;
 	min-height: 5rem;
 	background-color: var(--web-color1);
 	color: white;
@@ -9,7 +10,7 @@
 	position: sticky;
 	width: 100%;
 	top: 0;
-	z-index: 100;
+	z-index: var(--highest-z-index);
 
 }
 
@@ -21,12 +22,13 @@
 	content: 'Refidas Jeweries';
 }
 
+
 .navigation{
 	display: flex;
 	list-style: none;
 	font-weight: 700;
 	column-gap: 1.8rem;
-	margin:0 3rem 0 auto;
+	margin:0 2rem 0 auto;
 	flex-flow: row;
 
 
@@ -85,5 +87,9 @@
 @media screen and (max-width:720px){
 	.brand::before{
 	content: 'RJ';
+	}
+
+	.navigation{
+		margin: 0 0.5rem 0 0;
 	}
 }

@@ -11,6 +11,7 @@ import Cart from '../Cart'
 import classes from './Header.module.css';
 import { homepage, login } from  '../../web-urls'
 import UserOption from '../UserOption'
+import SearchProduct from '../SearchProduct'
 
 
 function Header() {
@@ -35,14 +36,11 @@ function Header() {
 		<React.Fragment>
 			<nav className={classes.header}>
 				<h1 className={classes.brand} onClick={()=>router.push(homepage)}></h1>
+				<div className={classes.search}><SearchProduct /></div>
 				<ul className={classes.navigation}>
 
 					<li onClick={()=>router.push(homepage)}>
 						<Store />
-					</li>
-
-					<li  className={classes['navigation-login']}>
-						{ authIcon }
 					</li>
 
 					<li>
@@ -54,7 +52,7 @@ function Header() {
 					</li>
 
 				</ul>
-							</nav>
+			</nav>
 			{userOptionVisible && <div className={classes["user-option"]}>
 							<UserOption />
 						</div>}

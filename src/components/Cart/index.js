@@ -11,7 +11,7 @@ import classes from './Cart.module.css';
 import { StateLoading } from '../ui/Loader'
 import { cartActions } from '../slice/cart-slice'
 import { getCartApiUrl } from '../../api-urls'
-import { getProductUrl } from '../../web-urls'
+import { getProductUrl, checkout } from '../../web-urls'
 import { useHttp } from '../Hooks'
 
 const CartItem = (props) =>{
@@ -40,6 +40,8 @@ const CartItem = (props) =>{
 			payload[id] += units 
 		}
 		else if (action === 'delete'){
+			const confirm = window.confirm("Delete Items from Cart?")
+			if(!confirm) return;
 			delete payload[id]
 		}
 
@@ -105,6 +107,7 @@ export const CartContent = () =>{
 	// Container that contains all items added to cart
 	const { items,itemsCount } = useSelector(state=>state.cart)
 	const dispatch = useDispatch()
+	const router = useRouter()
 	const {status, data} = useSession()
 	const [contentState, setContentState] = useState(initialContentState)
 	const {content,cartIsEmpty,cartAmount} = contentState
@@ -157,6 +160,11 @@ export const CartContent = () =>{
 	const hideCartItems = () =>{
 		dispatch(cartActions.hideCart())
 	}
+
+	const handleCheckout = () =>{
+		dispatch(cartActions.hideCart())
+		router.push(checkout)
+	}
 	
 
 	return (
@@ -178,7 +186,7 @@ export const CartContent = () =>{
 							<div className={classes['cart-content-footer']}>
 									<span className={classes['total-label']}>Total:</span>
 									<span className={classes.total}> # {cartAmount.toFixed(2)}</span>
-									<button className={classes.checkout} type='button'>Checkout</button>
+									<button onClick={handleCheckout} className={classes.checkout} type='button'>Checkout</button>
 							</div>)
 						}
 

@@ -11,6 +11,9 @@
   --style-color1:#F72585;
   --style-color2:#B5179E;
   --style-neutral:grey;
+
+  --highest-z-index:100;
+  --medium-z-index:50;
 }
 *::before,
 *,

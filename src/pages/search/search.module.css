@@ -1,0 +1,35 @@
+.content{
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+
+.heading {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	margin: 1rem 1rem;
+	border-bottom: 1px solid lightgrey;
+}
+
+.back-home, .search-icon{
+	cursor: pointer;
+}
+.search-icon{
+	border: none;
+	background-color: inherit;
+}
+
+.input{
+	margin:0 1rem 0 1rem;
+	text-indent: 0.5rem;
+	border: none;
+}
+.input:focus{
+	outline: none;
+}
+
+@media screen and (min-width:1000px){
+	.content{
+		margin:0 5rem 0 5rem;
+	}
+}

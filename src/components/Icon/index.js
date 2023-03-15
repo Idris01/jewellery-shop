@@ -82,5 +82,22 @@ export const ArrowDown = () => {
 			)
 }
 
+export const SearchIcon = () =>{
+	return (
+		<span className="material-symbols-outlined">
+			search
+		</span>
+
+		)
+}
+
+export const ArrowBack = () =>{
+	return (
+		<span className="material-symbols-outlined">
+			arrow_back
+		</span>
+
+		)
+}
 
 export default Icon

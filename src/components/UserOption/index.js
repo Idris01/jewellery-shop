@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { signOut } from 'next-auth/react'
 import classes from './UserOption.module.css'
-import {login} from '../../web-urls'
+import {login, profile} from '../../web-urls'
 import { uiActions } from '../slice/ui-slice'
 
 function UserOption() {
@@ -20,6 +20,9 @@ function UserOption() {
 
 		if (name === 'logout'){
 			signOut()
+		}
+		if (name === 'profile'){
+			router.push(profile)
 		}
 	}
 	return (
