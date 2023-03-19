@@ -1,9 +1,9 @@
-import { Favorite } from '/src/components/Icon'
+import { Favorite, AddCart } from '/src/components/Icon'
 import {useDispatch,useSelector} from 'react-redux'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-
+import AddItemButton from '../AddItemButton'
 import { getProductUrl } from '../../web-urls';
 import { getCartApiUrl } from '../../api-urls'
 
@@ -24,44 +24,7 @@ const Product = (props) =>{
   const productPictureUrls = pictures.split(',')
 
   const isAuthenticated = session.status === 'authenticated'
-  const url = getCartApiUrl(session.data?.user?.user_id)
-
-  const addItemToCart = async (id,amount) =>{
-    if (!isAuthenticated){
-      return
-    }
-
-    // data to be syncronized with the backend 
-    const newData = { 
-      ...itemsInCart,
-      [id]: itemsInCart[id]? itemsInCart[id]+amount : amount
-       }
-
-    // body of fetch request
-    const body = {
-      method:"PUT",
-      body: JSON.stringify({"cart":JSON.stringify(newData)}),
-      headers:{
-        'Content-Type': "application/json",
-        'Authorization': `Bearer ${session.data?.access_token}`
-      },
-    }
-       useHttp({url,body})
-       .then(res=>{
-        
-        const {error, data} = res
-        if (data){
-          const {message, data:productData} = data
-          let itemsCount = Object.values(productData).reduce((acc,current)=>acc+current,0)
-           dispatch(cartActions.setItems({
-            items:productData,
-            itemsCount
-          }))
-        }
-       })
-   
-  }
-
+ 
   const favoriteHandler = (itemId) => {
     if(!isAuthenticated){ // only authenticated user can add item to cart
       return
@@ -76,19 +39,15 @@ const Product = (props) =>{
   const productUrl = getProductUrl(unique_id);
 
   return (
-      <li className={classes.product}  >
+      <li className={classes.product}>
         <div onClick={()=>router.push(productUrl)} className={classes.image}>
           <img  src={productPictureUrls[0]} alt={`Picture of ${name}`} />
         </div>
-        <span>reviews</span>
         <span className={classes.name}>{name}</span>
-        <div className={classes['to-cart']}>
+        
           <span className={classes.price}># {parseInt(price).toFixed(2)}</span>
-          <span onClick={favoriteHandler.bind(null,unique_id)} className={favClass}>
-            <Favorite />
-          </span>
-          <button onClick={addItemToCart.bind(null,unique_id,1)} type='button' className={classes['add-to-cart']}>Add To Cart</button>
-        </div>
+          <AddItemButton unique_id={unique_id} />
+    
         {inStock? 
           <span className={classes.instock}> Instock </span> : 
           <span className={classes.notInStock}>Out of Stock </span>

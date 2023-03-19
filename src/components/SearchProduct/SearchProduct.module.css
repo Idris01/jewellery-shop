@@ -10,6 +10,7 @@
 	padding: 0.2rem;
 	cursor: pointer;
 	max-width: 100%;
+	align-items: center;
 }
 
 .search-placeholder{
@@ -26,13 +27,16 @@
 
 }
 
-.submit{
-	margin: 0;
-	height:100%;
-	padding: 0 0.5rem;
-	background-color: var(--web-color9);
-	color: var(--web-color2);
-	border-radius: 0.1rem;
-	border: 2px solid var(--web-color9);
-	cursor: pointer;
+
+@media screen and (max-width:600px){
+	.search-container{
+		background-color: inherit;
+		margin:0 2rem 0 0;
+	}
+	.search-placeholder{
+		display: none;
+	}
+	.search-icon{
+		color:var(--web-color9);
+	}
 }

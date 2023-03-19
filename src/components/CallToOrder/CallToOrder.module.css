@@ -1,0 +1,14 @@
+.call{
+	cursor: pointer;
+	border: 1px solid var(--web-color3);
+	padding: 0.2rem;
+	border-radius: 0.5rem;
+}
+
+.call:hover{
+	color:black;
+	background-color: var(--web-color1);
+}
+.call > *:hover{
+	color:white;
+}

@@ -5,7 +5,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 
-import products from '../DummyData'
 import { productActions } from '../components/slice/product-slice'
 
 import Product, {ProductContainer} from '../components/Product'
@@ -20,7 +19,7 @@ export default function Home(props) {
   
 
   const {items,status,message} = webProduct
-  
+  const itemNum = [1, 2, 3, 4, 5, 6]
 
   
   let content;
@@ -32,7 +31,8 @@ export default function Home(props) {
   }
   else{
         dispatch(productActions.update(items))
-        content=Object.values(items).map(item=><Product key={item.unique_id} {...item} />)
+        const prodList = Object.values(items)
+        content=itemNum.map(item=><Product key={item} {...prodList[0]} />)
   }
 
   return (

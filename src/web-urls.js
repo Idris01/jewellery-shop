@@ -4,4 +4,5 @@ export const register = '/auth/register'
 export const getProductUrl = (productId) =>`/products/${productId}`
 export const checkout = '/checkout'
 export const profile = '/profile'
-export const searchPage = '/search'
+export const products = '/products'
+export const contactNumber = '+2348105387436'

@@ -29,9 +29,10 @@
 	display: flex;
 	justify-content:center;
 	align-items: center;
+	flex-direction: column;
 }
 
-.state-loading > span{
+.state-loading > span:nth-child(1){
 	display: inline-block;
 	width: 1.5em;
 	height: 1.5em;

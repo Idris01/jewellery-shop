@@ -5,3 +5,4 @@ export const token_refresh = 'http://refidas-shop-dev.us-east-1.elasticbeanstalk
 export const getCartApiUrl = (userId) =>`http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api/users/${userId}/cart/`
 export const getProfileUrl = (userId) =>`http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api/users/${userId}/profile/`
 export const token_validity = 300
+export const getProductApiUrl = (unique_id) => `http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api/products/${unique_id}/`

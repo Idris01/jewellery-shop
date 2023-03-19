@@ -40,7 +40,6 @@
 }
 .navigation > *:hover{
 	color: white;
-	transform: scale(1.2);
 }
 
 .navigation > li > a {

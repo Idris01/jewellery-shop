@@ -100,4 +100,41 @@ export const ArrowBack = () =>{
 		)
 }
 
+export const NetworkOff = () =>{
+	return (
+		<span className="material-symbols-outlined">
+			signal_disconnected
+		</span>
+
+		)
+}
+
+export const Clear = () =>{
+	return (
+		<span className="material-symbols-outlined">
+			cancel
+		</span>
+
+		)
+}
+
+export const AddCart = () =>{
+	return (
+		<span className="material-symbols-outlined">
+			add_shopping_cart
+		</span>
+
+		)
+}
+
+export const Call = () =>{
+	return (
+		<span className="material-symbols-outlined">
+			call
+		</span>
+
+		)
+}
+
+
 export default Icon

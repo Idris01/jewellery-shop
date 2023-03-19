@@ -1,0 +1,21 @@
+.add-to-cart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--web-color3);
+  color:white;
+  padding: 0.2rem 0.2rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--web-color6);
+  cursor: pointer;
+  font-size: 12px;
+  grid-area: cart;
+  width:100%;
+}
+.add-to-cart:hover{
+  background-color: var(--web-color1);
+}
+
+.add-to-cart > *{
+  transform: scale(0.8);
+}

@@ -46,7 +46,6 @@ const reducer = (state,action) =>{
 	}
 	else if( action.type === 'UPDATE-VALUE'){
 		const {name,value} = action.data;
-		console.log(action.data)
 
 		return {
 			...state,

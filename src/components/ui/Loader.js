@@ -26,11 +26,12 @@ const Loader = () =>{
 	
 }
 
-export function StateLoading(){
+export function StateLoading(props){
+	const { message } = props
 	return (
 			<div className={classes["state-loading"]}>
-				<span>
-				</span>
+				<span></span>
+				{message && <span>{message}</span>}
 			</div>
 		)
 }
