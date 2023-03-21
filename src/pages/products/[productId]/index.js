@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { FilledLayout } from '../../../components/Layout'
 import Icon from '../../../components/Icon'
 import  AddItemButton  from '../../../components/AddItemButton'
 import classes from './ProductDetail.module.css'
-import { useHttp } from '../../../components/Hooks'
+import { makeHttp } from '../../../components/Hooks'
 import { StateLoading } from '../../../components/ui/Loader'
 import  CallToOrder from '../../../components/CallToOrder'
 import { getProductApiUrl } from '../../../api-urls'
@@ -29,7 +30,7 @@ function ProductDetail( props ) {
 	
 	useEffect(() =>{
 		const url = getProductApiUrl(productId)
-		useHttp({url})
+		makeHttp({url})
 		.then(res =>{
 			const {error, data:itemData} = res
 			if (!error){
@@ -47,7 +48,7 @@ function ProductDetail( props ) {
 			}
 		})
 			
-	},[])
+	},[productId])
 
 	const toggleImage = (direction) =>{
 		const numPics = pictures.length
@@ -71,7 +72,7 @@ function ProductDetail( props ) {
 								{name}
 							</div>
 							<div className={classes.images}>
-								<img src={pictures[shownImageIndex]} alt={`picture of ${name}`} />
+								<Image src={pictures[shownImageIndex]} width="500" height="500" alt={`picture of ${name}`} />
 								<div onClick={toggleImage.bind(null,'next')} className={classes.next}>
 									<Icon name="arrow_back_ios" />
 								</div>

@@ -55,8 +55,6 @@ export const StoreProvider = (props) =>{
 			// console.log('skipping auto timer')
 			return
 		}
-
-		console.log('setting auto timmer ...')
 		events.forEach(event=>{
 			window.addEventListener(event,()=>{
 				resetTimer()
@@ -64,7 +62,7 @@ export const StoreProvider = (props) =>{
 			})
 		})
 
-	}, [status])
+	}, [status, isAuthenticated, handleLogoutTimer, resetTimer])
 
 	return (
 			<Provider store={store}>

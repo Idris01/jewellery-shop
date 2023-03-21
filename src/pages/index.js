@@ -2,7 +2,6 @@ import { Fragment , useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useSession, signOut } from 'next-auth/react'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 
 import { productActions } from '../components/slice/product-slice'

@@ -9,7 +9,7 @@ import { getCartApiUrl } from '../../api-urls'
 
 import {cartActions} from '../slice/cart-slice'
 import {authActions} from '../slice/auth-slice'
-import { useHttp } from '../Hooks'
+import { makeHttp } from '../Hooks'
 import classes from './Product.module.css'
 
 
@@ -41,7 +41,7 @@ const Product = (props) =>{
   return (
       <li className={classes.product}>
         <div onClick={()=>router.push(productUrl)} className={classes.image}>
-          <img  src={productPictureUrls[0]} alt={`Picture of ${name}`} />
+          <Image width="500" height="500"  src={productPictureUrls[0]} alt={`Picture of ${name}`} />
         </div>
         <span className={classes.name}>{name}</span>
         

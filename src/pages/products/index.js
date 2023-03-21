@@ -5,7 +5,7 @@ import { SearchIcon, ArrowBack, Clear } from '../../components/Icon'
 import classes from './products.module.css'
 import { homepage } from '../../web-urls'
 import { products } from '../../api-urls'
-import { useHttp } from '../../components/Hooks'
+import { makeHttp } from '../../components/Hooks'
 import { StateLoading } from '../../components/ui/Loader'
 import Product, { ProductContainer } from '../../components/Product'
 
@@ -30,7 +30,7 @@ function Search() {
 		event?.preventDefault()
 		if (query.trim().length == 0) return;
 		setPageContent(<StateLoading message="loading..." />)
-		useHttp({url:`${products}?search=${query}`})
+		makeHttp({url:`${products}?search=${query}`})
 		.then(({error, data}) =>{
 			if(error){
 					setPageContent(<p>{error}</p>);

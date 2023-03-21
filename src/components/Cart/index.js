@@ -12,7 +12,7 @@ import { StateLoading } from '../ui/Loader'
 import { cartActions } from '../slice/cart-slice'
 import { getCartApiUrl } from '../../api-urls'
 import { getProductUrl, checkout } from '../../web-urls'
-import { useHttp } from '../Hooks'
+import { makeHttp } from '../Hooks'
 
 const CartItem = (props) =>{
 	const { items,itemsCount } = useSelector(state=>state.cart)
@@ -57,7 +57,7 @@ const CartItem = (props) =>{
 
 		let url=getCartApiUrl(user_id)
 
-		useHttp({url, body})
+		makeHttp({url, body})
 		.then(resp=>{
 			const {error, data} = resp
 	        if (data){
@@ -112,12 +112,11 @@ export const CartContent = () =>{
 	const [contentState, setContentState] = useState(initialContentState)
 	const {content,cartIsEmpty,cartAmount} = contentState
 
-
+	const user_id = data?.user?.user_id
+	const access_token = data?.access_token
+	
 	useEffect(()=>{
 		if (!(status === 'authenticated')) return;
-
-		const user_id = data?.user?.user_id
-		const access_token = data?.access_token
 
 		const body = {
 			headers: {
@@ -125,7 +124,7 @@ export const CartContent = () =>{
 			}
 		}
 
-		useHttp({url:getCartApiUrl(user_id), body})
+		makeHttp({url:getCartApiUrl(user_id), body})
 		.then(({error,data})=>{
 			if (error) return;
 			let cartAmount = 0
@@ -155,7 +154,7 @@ export const CartContent = () =>{
 
 			setContentState({cartAmount,content,cartIsEmpty})
 		})
-	},[itemsCount])
+	},[itemsCount, status, user_id, access_token])
 
 	const hideCartItems = () =>{
 		dispatch(cartActions.hideCart())
@@ -205,6 +204,9 @@ function Cart(props) {
 	const dispatch = useDispatch()
 	const { status,data } = session
 	const isAuthenticated = status == 'authenticated'
+	const user_id = data?.user.user_id
+	const access_token = session.data?.access_token
+	
 	const showCartItems = () =>{
 		if (!isAuthenticated){
 			return
@@ -217,15 +219,15 @@ function Cart(props) {
 			return
 		}
 		const requestContent = {
-			url:getCartApiUrl(data?.user.user_id),
+			url:getCartApiUrl(user_id),
 			body: {
 				'headers': {
 					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${session.data?.access_token}`
+					'Authorization': `Bearer ${access_token}`
 				}
 			}
 		}
-		useHttp(requestContent)
+		makeHttp(requestContent)
 		.then(res =>{
 			// cart data will be availabile in the `res`
 			const { error, data} = res;
@@ -250,7 +252,7 @@ function Cart(props) {
 			
 		})
 
-	},[status])
+	},[status, isAuthenticated, user_id, access_token, dispatch])
 
 
 	return (

@@ -1,7 +1,7 @@
 import { signIn } from 'next-auth/react'
 import {useDispatch,useSelector} from 'react-redux'
 import { useSession } from 'next-auth/react'
-import { useHttp } from '../Hooks'
+import { makeHttp } from '../Hooks'
 import { AddCart } from '../Icon'
 import classes from './AddItemButton.module.css'
 import { getCartApiUrl } from '../../api-urls'
@@ -36,7 +36,7 @@ function AddItemButton(props) {
         'Authorization': `Bearer ${session.data?.access_token}`
       },
     }
-       useHttp({url,body})
+       makeHttp({url,body})
        .then(res=>{
         
         const {error, data} = res

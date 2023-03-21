@@ -1,4 +1,4 @@
-export async function useHttp({url,body}){
+export async function makeHttp({url,body}){
 	const hookData = {
 		error:null,
 		data:null
