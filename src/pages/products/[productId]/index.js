@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { FilledLayout } from '../../../components/Layout'
+import Icon from '../../../components/Icon'
 import  AddItemButton  from '../../../components/AddItemButton'
 import classes from './ProductDetail.module.css'
 import { useHttp } from '../../../components/Hooks'
@@ -23,6 +24,7 @@ function ProductDetail( props ) {
 	const router = useRouter();
 	const { productId } = router.query
 	const  [data, setData] = useState({loading:true,error:null,productData})
+	const [shownImageIndex, setShownImageIndex] = useState(0)
 	const {pictures,unique_id,units,price,name,units_available,units_sold, description} = data.productData
 	
 	useEffect(() =>{
@@ -47,6 +49,20 @@ function ProductDetail( props ) {
 			
 	},[])
 
+	const toggleImage = (direction) =>{
+		const numPics = pictures.length
+		const directionMap = {next:1, prev:0}
+		if (!direction || directionMap[direction] === undefined) return;
+		let newIndex;
+		if (direction === 'next'){
+			newIndex = shownImageIndex + 1 === numPics? 0 : shownImageIndex + 1
+		}
+		else{
+			newIndex = shownImageIndex - 1 < 0? numPics - 1 : shownImageIndex - 1	
+		}
+		setShownImageIndex(newIndex)
+	}
+
 	return (
 		<FilledLayout>
 			{(!data.loading && !data.error) &&
@@ -55,8 +71,16 @@ function ProductDetail( props ) {
 								{name}
 							</div>
 							<div className={classes.images}>
-								<img src={pictures[0]} alt={`picture of ${name}`} />
+								<img src={pictures[shownImageIndex]} alt={`picture of ${name}`} />
+								<div onClick={toggleImage.bind(null,'next')} className={classes.next}>
+									<Icon name="arrow_back_ios" />
+								</div>
+								<div onClick={toggleImage.bind(null,'prev')} className={classes.prev}>
+									<Icon name="arrow_back_ios" />
+								</div>
 							</div>
+
+							
 							<dl className={classes.description}>
 								<dt>Description</dt>
 								<dd>{description}</dd>
@@ -64,8 +88,9 @@ function ProductDetail( props ) {
 							<div className={classes.order}>
 								<CallToOrder /> <AddItemButton showLabel={true} />
 							</div>
+							<div className={classes["product-price"]}>{price}</div>
 							<div className={classes.review}>
-								
+								Reviews Here
 							</div>
 						</div>}
 			{data.loading && <StateLoading message="loading..." />}
