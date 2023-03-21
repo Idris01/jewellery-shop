@@ -29,6 +29,7 @@ function ProductDetail( props ) {
 	const {pictures,unique_id,units,price,name,units_available,units_sold, description} = data.productData
 	
 	useEffect(() =>{
+		if (!productId) return;
 		const url = getProductApiUrl(productId)
 		makeHttp({url})
 		.then(res =>{

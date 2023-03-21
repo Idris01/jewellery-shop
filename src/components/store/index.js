@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import {configureStore} from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { signOut, useSession } from 'next-auth/react'
@@ -35,7 +35,7 @@ export const StoreProvider = (props) =>{
 
 	let logoutTimer;
 
-	const handleLogoutTimer = () => {
+	const handleLogoutTimer = useCallback(() => {
 		logoutTimer = setTimeout(()=>{
 			resetTimer()
 			events.forEach(event=>{
@@ -43,11 +43,11 @@ export const StoreProvider = (props) =>{
 			})
 			signOut()	// auto logout user
 		}, milliSecondsToTrigger)
-	}
+	},[milliSecondsToTrigger])
 
-	const resetTimer = () => {
+	const resetTimer = useCallback(() => {
 		if (logoutTimer) clearTimeout(logoutTimer)
-	}
+	},[logoutTimer])
 	
 	useEffect(()=>{
 		// no need to set auto logout
