@@ -1,8 +1,10 @@
-export const products = 'http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api/products/'
-export const register = 'http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api_auth/register/'
-export const login = 'http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api_auth/token/'
-export const token_refresh = 'http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api_auth/token/refresh/'
-export const getCartApiUrl = (userId) =>`http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api/users/${userId}/cart/`
-export const getProfileUrl = (userId) =>`http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api/users/${userId}/profile/`
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+
+export const products = `${BASE_URL}/api/products/`
+export const register = `${BASE_URL}/api_auth/register/`
+export const login = `${BASE_URL}/api_auth/token/`
+export const token_refresh = `${BASE_URL}/api_auth/token/refresh/`
+export const getCartApiUrl = (userId) =>`${BASE_URL}/api/users/${userId}/cart/`
+export const getProfileUrl = (userId) =>`${BASE_URL}/api/users/${userId}/profile/`
 export const token_validity = 300
-export const getProductApiUrl = (unique_id) => `http://refidas-shop-dev.us-east-1.elasticbeanstalk.com/api/products/${unique_id}/`
+export const getProductApiUrl = (unique_id) => `${BASE_URL}/api/products/${unique_id}/`
