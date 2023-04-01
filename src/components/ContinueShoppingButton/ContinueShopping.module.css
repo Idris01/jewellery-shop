@@ -1,0 +1,13 @@
+.shopping{
+	padding: 0.5rem 1rem;
+	color: var(--web-color9);
+	background-color: var(--web-color1);
+	max-height: 2.5rem;
+	border-radius: 0.2rem;
+	cursor: pointer;
+	font-size: 15px;
+}
+
+.shopping:hover{
+	background-color: var(--web-color2);
+}

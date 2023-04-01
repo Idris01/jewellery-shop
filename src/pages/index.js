@@ -7,6 +7,7 @@ import styles from '@/styles/Home.module.css'
 import { productActions } from '../components/slice/product-slice'
 
 import Product, {ProductContainer} from '../components/Product'
+import Error from '../components/ui/Error'
 import { FilledLayout } from '../components/Layout'
 import { products as productsUrl } from '../api-urls'
 
@@ -23,7 +24,7 @@ export default function Home(props) {
   
   let content;
   if (!items ){
-    content = <li> { message }</li>
+    content = <Error message={message}/>
   }
   else if (items.length === 0){
     content = <li>No content Found!</li>

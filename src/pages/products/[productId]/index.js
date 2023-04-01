@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { FilledLayout } from '../../../components/Layout'
 import Icon from '../../../components/Icon'
+import Error from '../../../components/ui/Error'
 import  AddItemButton  from '../../../components/AddItemButton'
 import classes from './ProductDetail.module.css'
 import { makeHttp } from '../../../components/Hooks'
@@ -96,7 +97,7 @@ function ProductDetail( props ) {
 							</div>
 						</div>}
 			{data.loading && <StateLoading message="loading..." />}
-			{data.error && <span>{data.error}</span>}
+			{data.error && <Error message={data.error}/>}
 		</FilledLayout>
 
 	)

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Layout from '../../components/Layout'
+import classes from './'
 import { getProfileUrl } from '../../api-urls'
 import { StateLoading } from '../../components/ui/Loader'
 import { login } from '../../web-urls'
@@ -24,7 +25,10 @@ function Checkout() {
 
 	return (
 		<Layout>
-			{content}
+				<div className={classes.checkout}>
+					
+				</div>
+			
 		</Layout>
 	)
 }

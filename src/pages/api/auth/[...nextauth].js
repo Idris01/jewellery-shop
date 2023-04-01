@@ -1,5 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import {login} from '../../../web-urls'
+import {login, error} from '../../../web-urls'
 import {login as apiLogin, token_validity, token_refresh as refresh_url } from '/src/api-urls'
 import NextAuth from "next-auth"
 
@@ -35,7 +35,8 @@ export const authOptions = {
   })
 ],
  pages: {
-    signIn: login
+    signIn: login,
+    error
   },
   callbacks:{
     async jwt({token, user, account, profile}){

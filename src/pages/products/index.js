@@ -6,6 +6,7 @@ import classes from './products.module.css'
 import { homepage } from '../../web-urls'
 import { products } from '../../api-urls'
 import { makeHttp } from '../../components/Hooks'
+import { BrandHeader } from '../../components/Header'
 import { StateLoading } from '../../components/ui/Loader'
 import Product, { ProductContainer } from '../../components/Product'
 
@@ -58,6 +59,7 @@ function Search() {
 	return (
 		<Layout>
 			<div className={classes.content}>
+				<BrandHeader />
 				<form className={classes.heading} onSubmit={ doSearch.bind(null,inputValue)}>
 				<span onClick={() => router.push(homepage)} className={classes["back-home"]}><ArrowBack /></span>
 				<input onChange={handleInputValue} className={classes.input} type="text" placeholder="search by name, category, description" value={inputValue} autoFocus/>

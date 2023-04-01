@@ -61,4 +61,13 @@ function Header() {
 	)
 }
 
+export const BrandHeader = () =>{
+	return (
+		<div className={classes["brand-header"]}>
+				<h3 className={classes.brand}></h3>
+		
+		</div>
+		)
+}
+
 export default Header
