@@ -7,6 +7,7 @@ import { CartContent } from '../Cart'
 import { useSelector } from 'react-redux'
 
 function Layout(props) {
+
 	return (
 
 		<div className={classes.container}>
