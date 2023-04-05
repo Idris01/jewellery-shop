@@ -1,3 +1,37 @@
 .checkout{
 	display: grid;
+	grid-template-areas: 
+	" head head head head" 
+	"order order order order"
+	"address address address address " 
+	"foot foot foot foot";
+	grid-template-rows: auto 1fr 1fr auto;
+	grid-template-columns: 1fr 2fr 1fr 1fr;
+	gap: 0.5rem;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+	padding: 0 1rem;
+}
+
+.checkout_heading{
+	grid-area: head;
+	background-color: yellow;
+	display: flex;
+	justify-content: space-around;
+}
+
+.checkout_address{
+	grid-area:address;
+	background-color: orange;
+}
+.checkout_order{
+	grid-area: order;
+	background-color: green;
+}
+.checkout_footer{
+	grid-area: foot;
+}
+.checkout_anonymous{
+	grid-area: address;
 }

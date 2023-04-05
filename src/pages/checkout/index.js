@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Layout from '../../components/Layout'
-import classes from './'
+import { BrandHeader } from '../../components/Header'
+import classes from './checkout.module.css'
 import { getProfileUrl } from '../../api-urls'
 import { StateLoading } from '../../components/ui/Loader'
 import { login } from '../../web-urls'
@@ -10,27 +11,39 @@ import { login } from '../../web-urls'
 
 function Checkout() {
 	const { data, status} = useSession()
-	const [ content, setContent] = useState(<StateLoading message="loading ..." />)
 	const isAuthenticated = status === 'authenticated'
 	const user_id = data?.user?.user_id
 
-	useEffect(() =>{
-		if(!isAuthenticated) {
-			setContent(<div>Please <Link href={login}> Login </Link>to View this Page</div>)
-		}
-		else{
-			setContent(<div>CheckOut Page of {user_id}</div>)
-		}
-	},[user_id,isAuthenticated])
-
-	return (
-		<Layout>
-				<div className={classes.checkout}>
-					
-				</div>
+	if (isAuthenticated){
+		return (
+				<Layout>
+							<div className={classes.checkout}>
+								<div className={classes.checkout_heading}>
+									<BrandHeader title="checkout" />
+								</div>
+								<div className={classes.checkout_address}>address</div>
+								<div className={classes.checkout_order}>order</div>	
+								<div className={classes.checkout_footer}>foot</div>	
+							</div>
+						
+				</Layout>
+		)
+	}
+	else {
+		return (
+			<Layout>
+							<div className={classes.checkout}>
+								<div className={classes.checkout_heading}>
+									<BrandHeader title="checkout" />
+								</div>
+								<div className={classes.checkout_anonymous}>Please <Link href={login}> Login </Link>to View this Page</div>
+							</div>
+				
+			</Layout>
 			
-		</Layout>
-	)
+			)
+	}
+
 }
 
 export default Checkout

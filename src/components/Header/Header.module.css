@@ -23,7 +23,8 @@
 	display: flex;
 	padding: 1rem 1rem;
 	color: var(--web-color9);
-	justify-content: center;
+	width: 100%;
+	justify-content: space-around;
 }
 
 .brand::before{

@@ -61,10 +61,13 @@ function Header() {
 	)
 }
 
-export const BrandHeader = () =>{
+export const BrandHeader = (props) =>{
+	const router = useRouter()
+	const { title } = props
 	return (
 		<div className={classes["brand-header"]}>
-				<h3 className={classes.brand}></h3>
+				<h3 onClick={()=> router.push(homepage)} className={classes.brand}></h3>
+				{title && <h3>{title}</h3>}
 		
 		</div>
 		)
